@@ -12,11 +12,12 @@
     <!-- User Profile Image (Desktop) -->
     <div class="user-profile-desktop" *ngIf="student">
       <img [src]="userImageUrl" alt="Usuario" class="user-avatar" onerror="this.src='img/default-user.png'" />
-  
+
     </div>
     <div class=" flex flex-col">
-     <p class="text-white desktop-sia">SIA </p> 
-     <span class="text-white flex justify-center" style="font-family: 'Myriad Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  font-size: 1rem; font-weight: bold;">Alumno</span>
+      <p class="text-white desktop-sia">SIA </p>
+      <span class="text-white flex justify-center" *ngIf="student"
+        style="font-family: 'Myriad Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  font-size: 1rem; font-weight: bold;">Alumno</span>
     </div>
 
   </div>
