@@ -1,0 +1,179 @@
+/* Wrapper Layout similar to Login */
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("https://siaweb.ufpso.edu.co/public/views/imagenes/general/intro-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.flex_cont {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    /* Slight overlay for readability */
+}
+
+/* Sidebar Container */
+.flex_aside {
+    width: 340px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+}
+
+/* Content Area */
+#contenido {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.welcome-container {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+.welcome-container h1 {
+    color: #ec1c21;
+    font-family: 'Myriad Pro Bold', sans-serif;
+    margin-bottom: 10px;
+}
+
+/* Footer Styles (Reused) */
+.footer-custom {
+    background: #e6e6e6;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: auto;
+    border-top: 4px solid #ec1c21;
+}
+
+.footer-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-section.left {
+    justify-content: flex-end;
+}
+
+.footer-section.right {
+    justify-content: flex-start;
+}
+
+.sia-logo-container {
+    width: 60px;
+    height: 35px;
+    background-color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 2px;
+}
+
+.sia-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-text-group {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.sia-title {
+    font-weight: 800;
+    color: #333;
+    font-size: 0.85rem;
+}
+
+.sia-subtitle {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.footer-divider {
+    width: 2px;
+    height: 35px;
+    background-color: #ccc;
+}
+
+.footer-icon {
+    font-size: 2rem;
+    color: #ec1c21;
+}
+
+.dev-label {
+    font-size: 0.7rem;
+    color: #888;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.dev-name {
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #wrapper {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .flex_aside {
+        position: fixed;
+        top: 0;
+        left: -340px;
+        /* Hide off-screen (Left side) */
+        transition: left 0.3s ease;
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .flex_aside.active {
+        left: 0;
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 900;
+    }
+}

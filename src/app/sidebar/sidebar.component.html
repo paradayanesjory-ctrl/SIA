@@ -1,0 +1,268 @@
+<div class="flex_aside">
+  <aside id="lateral" class="activo">
+    <!--SIA-->
+    <div class="hamburMobil">
+      <i class="">
+        <div id="nav-icon1">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <label>SIA</label></i
+      >
+    </div>
+    <div id="SIA">
+      <span>SIA</span>
+    </div>
+    <!--HAMBURGUESA-->
+    <div id="hambur">
+      <span></span>
+      <span></span>
+      <hr />
+      <div>Menú</div>
+    </div>
+
+    <div class="texto_sia">
+      <span>SISTEMA DE INFORMACIÓN</span>
+      <span>ACADÉMICO</span>
+    </div>
+
+    <!-- CONTAINER INICIO (Shared Wrapper) -->
+    <div class="container-ini">
+      <span class="ini_ses mb-8">{{
+        isLoggedIn ? "MENÚ" : "INICIO DE SESIÓN"
+      }}</span>
+
+      <!-- LOGIN FORM -->
+      <form id="logeo" autocomplete="on" *ngIf="!isLoggedIn">
+        <div class="input_label">
+          <input
+            type="number"
+            class="codigo"
+            name="cod"
+            id="cod"
+            autocomplete="username"
+            maxlength="6"
+            placeholder=" "
+            [(ngModel)]="formData.codigo"
+            (keypress)="handleKeyPress($event)"
+          />
+          <div class="box_blanco">
+            <div class="box fa-solid fa-barcode"></div>
+            <label for="cod" class="">Código</label>
+          </div>
+        </div>
+        <div class="input_label">
+          <input
+            type="text"
+            class="documento"
+            name="doc"
+            id="doc"
+            autocomplete="on"
+            maxlength=""
+            style="border-bottom: none"
+            placeholder=" "
+            [(ngModel)]="formData.documento"
+            (keypress)="handleKeyPress($event)"
+          />
+          <div class="box_blanco">
+            <div class="box fa-solid fa-id-card"></div>
+            <label for="doc" class="activo">Documento</label>
+          </div>
+        </div>
+        <div class="input_label">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="contraseña"
+            id="pass"
+            name="pas"
+            autocomplete="current-password"
+            style="border-bottom: none"
+            placeholder=" "
+            [(ngModel)]="formData.password"
+            (keypress)="handleKeyPress($event)"
+          />
+          <div class="eye" (click)="togglePassword()">
+            <span
+              [class]="
+                showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
+              "
+            ></span>
+          </div>
+          <div class="box_blanco">
+            <div class="box fa-solid fa-key"></div>
+            <label for="pass" class="activo">Contraseña</label>
+          </div>
+        </div>
+        <a class="resetPass" (click)="resetPassword()"
+          ><span class="fa-solid fa-circle-question"></span>Olvidó su
+          contraseña</a
+        >
+      </form>
+
+      <!-- MENU LIST -->
+      <div id="logeo" *ngIf="isLoggedIn" style="margin-top: -10px">
+        <ul class="menu-list">
+          <li class="menu-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Datos Académicos</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-medal"></i>
+            <span>Notas</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-sitemap"></i>
+            <span>Pensum</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Horario</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-square-check"></i>
+            <span>Inclusiones</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-sack-dollar"></i>
+            <span>Financiación</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Bienestar Universitario</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--INGRESAR BUTTON (Only for Login)-->
+    <button
+      class="ingresar"
+      id="ingresar"
+      (click)="handleLogin()"
+      [disabled]="isLoading"
+      *ngIf="!isLoggedIn"
+    >
+      {{ isLoading ? "Ingresando..." : "Ingresar" }}
+    </button>
+  </aside>
+
+  <!-- Notificación de error -->
+  <div id="notificacion" class="activo" *ngIf="showNotification">
+    <div class="nota" [ngClass]="notificationType">
+      <div class="line">
+        <span
+          class="fa-solid"
+          [ngClass]="{
+            'fa-triangle-exclamation': notificationType === 'warning',
+            'fa-circle-xmark': notificationType === 'error',
+            'fa-circle-check': notificationType === 'success'
+          }"
+        ></span>
+      </div>
+      <div class="nota_contenido">
+        {{ notificationMessage }}
+      </div>
+      <div class="nota_x fa-solid fa-xmark" (click)="closeNotification()"></div>
+    </div>
+  </div>
+
+  <!-- Loader/Cargador -->
+  <div class="cover_general" [class.activo]="isLoading">
+    <div class="cargador">
+      <div class="loader" [class.activo]="isLoading"></div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-backdrop" *ngIf="showResetModal">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <span>Restablecer Contraseña</span>
+        <i
+          class="fa-solid fa-circle-xmark close-icon"
+          (click)="closeResetModal()"
+        ></i>
+      </div>
+
+      <!-- Warning Banner -->
+      <div class="modal-warning">
+        <div class="red-bar"></div>
+        <span>Si eres docente no puedes realizar cambio de contraseña.</span>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="modal-form">
+          <!-- Row 1: Codigo & Documento -->
+          <div class="input-group">
+            <i class="fa-solid fa-credit-card input-icon"></i>
+            <input type="text" placeholder="Código" />
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-address-card input-icon"></i>
+            <input type="text" placeholder="Documento" />
+          </div>
+
+          <!-- Row 2: Fecha & Correo Inst -->
+          <div class="input-group">
+            <i class="fa-solid fa-calendar-days input-icon"></i>
+            <input
+              type="text"
+              placeholder="Fecha de expedición"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+            />
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" placeholder="Correo Institucional" />
+          </div>
+
+          <!-- Row 3: Correo Pers & Confirmar -->
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" placeholder="Correo Electrónico Personal" />
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" placeholder="Confirmar Correo Personal" />
+          </div>
+        </div>
+
+        <div class="modal-info-text">
+          Se enviará un correo con el enlace para que pueda realizar el cambio
+          de contraseña
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <footer class="footer-custom modal-footer-custom">
+        <div class="footer-section left">
+          <div class="sia-logo-container">
+            <img
+              src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png"
+              class="sia-img-modal"
+              alt="UFPSO Logo"
+              onerror="this.style.display='none'"
+            />
+            <div class="sia-fallback-logo" style="display: none">UFPSO</div>
+          </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-section right">
+          <i class="fa-solid fa-desktop footer-icon"></i>
+          <div class="footer-text-group">
+            <div class="dev-label">Desarrollado por:</div>
+            <div class="dev-name">DIVISIÓN DE SISTEMAS -</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
