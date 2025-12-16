@@ -1,0 +1,364 @@
+<div id="wrapper">
+  <div class="flex_cont">
+    <app-navbar 
+      [isSidebarOpen]="isSidebarOpen" 
+      (menuToggled)="toggleSidebar()"
+    ></app-navbar>
+
+    <section class="">
+      <!--NOTICIAS-->
+      <div class="container-inicio">
+        <div class="letreros">
+          <span class="titulo">Noticias y Eventos</span>
+        </div>
+        <div class="rowNoticias">
+          <div class="containerNoti">
+            <a
+              style="width: 100%; height: 100%"
+              target="_blank"
+              href="https://play.google.com/store/apps/details?id=co.edu.ufpso&amp;hl=es"
+            >
+              <div
+                class="noticia"
+                style="
+                  background-image: url(https://siaweb.ufpso.edu.co/comprimir.php?imgURL=app/autenticacion/views/imagenes/noticias/high_resolution/especifica/SIAPP.png);
+                "
+              >
+                <span class="notiTitulo">Aplicación móvil</span>
+                <p class="notiTexto">
+                  La División de Sistemas en aras de mejorar la interacción de
+                  los estudiantes con el Sistema de Información Académico,
+                  presenta la primera aplicación móvil multiplataforma; la cual
+                  tiene como objetivo brindar una cómoda visualización en los
+                  dispositivos móviles.
+                </p>
+                <span class="notiAutor">DIVISIÓN DE SISTEMAS</span>
+                <span class="notiFecha">23 de Noviembre</span>
+              </div></a
+            >
+          </div>
+          <div class="containerNoti">
+            <a
+              style="width: 100%; height: 100%"
+              target="_blank"
+              href="https://ufpso.edu.co"
+            >
+              <div
+                class="noticia"
+                style="
+                  background-image: url(https://siaweb.ufpso.edu.co/comprimir.php?imgURL=app/autenticacion/views/imagenes/noticias/star.jpg);
+                "
+              >
+                <span class="notiTitulo">BIENVENIDOS AL NUEVO SIA</span>
+                <p class="notiTexto">
+                  La Universidad Francisco de Paula Santander Ocaña ha
+                  desarrollado una nueva plataforma para el Sistema de
+                  Información Académico (SIA) con el deseo de prestar un mejor
+                  servicio para administrativos y estudiantes. Sean bienvenidos,
+                  esperamos que el nuevo diseño sea de su agrado.
+                </p>
+                <span class="notiAutor">División de sistemas</span>
+                <span class="notiFecha">01 de SEPTIEMBRE</span>
+              </div></a
+            >
+          </div>
+          <div class="containerNoti">
+            <a
+              style="width: 100%; height: 100%"
+              target="_blank"
+              href="https://ufpso.edu.co"
+            >
+              <div
+                class="noticia"
+                style="
+                  background-image: url(https://siaweb.ufpso.edu.co/comprimir.php?imgURL=app/autenticacion/views/imagenes/noticias/star.jpg);
+                "
+              >
+                <span class="notiTitulo">BIENVENIDOS AL NUEVO SIA</span>
+                <p class="notiTexto">
+                  Bienvenidos al nuevo sistema de información academico
+                </p>
+                <span class="notiAutor">División de sistemas</span>
+                <span class="notiFecha">01 de SEPTIEMBRE</span>
+              </div></a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer-custom">
+      <!-- Left Section -->
+      <div class="footer-section left">
+        <div class="sia-logo-container">
+          <!-- Using CSS to replicate the SIA box if image is not ideal, but keeping img for safety if user has it. 
+                The user image shows a specific gray box with SIA. I will use a FontAwesome icon or CSS box if image fails. -->
+          <img
+            src="assets/imagenes/ufpso/logo_sia.png"
+            class="sia-img"
+            alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          />
+          <div class="sia-fallback-logo" style="display: none">SIA</div>
+        </div>
+        <div class="footer-text-group">
+          <div class="sia-title">SISTEMA DE INFORMACIÓN ACADÉMICO (BETA)</div>
+          <div class="sia-subtitle">
+            Universidad Francisco de Paula Santander - Ocaña, Colombia
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="footer-divider"></div>
+
+      <!-- Right Section -->
+      <div class="footer-section right">
+        <!-- Monitor Icon -->
+        <i class="fa-solid fa-desktop footer-icon"></i>
+        <div class="footer-text-group">
+          <div class="dev-label">Desarrollado por:</div>
+          <div class="dev-name">DIVISIÓN DE SISTEMAS -</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div class="flex_aside">
+    <!-- Click Outside Backdrop -->
+    <div
+      class="sidebar-backdrop"
+      *ngIf="isSidebarOpen"
+      (click)="closeSidebar()"
+    ></div>
+
+    <aside id="lateral" [class.activo]="isSidebarOpen">
+      <!--LOGIN-->
+
+      <!--HAMBURGER (Visible on mobile when sidebar is closed) -->
+      <!-- Note: We hide this when sidebar is open via *ngIf or CSS class control if desired by user 
+           User said: "desaparezca la hamburguesa y sia" when open. 
+           We can control this with *ngIf="!isSidebarOpen" on the hamburger container inside the navbar or where it resides.
+           BUT the hamburger is currently in the Navbar component or potentially duplicated here.
+           Wait, the user added the hamburger to the Navbar HTML in previous steps. 
+           I need to check where the hamburger actually IS now. The user edited Navbar HTML in step 637.
+           I need to check if I can control Navbar state from Login.
+           Actually, the user also had .hamburMobil in Login HTML (lines 127-136 in step 610 view).
+           But then they removed it in step 641.
+           So the hamburger is in the Navbar.
+           
+           Issue: Navbar is a separate component <app-navbar>. 
+           To control Navbar hamburger from Login, I'd need a shared service or event emitter.
+           However, checking the *current* Login HTML (step 682 view), lines 121 starts with "SIA".
+           The hamburger seems to be gone from Login HTML.
+           
+           If the hamburger is in Navbar, I cannot directly bind (click) from Login component without communication.
+           
+           Let's look at Navbar HTML again.
+      -->
+      <!--SIA-->
+      <div class="texto_sia">
+        <span>SISTEMA DE INFORMACIÓN</span>
+        <span>ACADÉMICO</span>
+      </div>
+
+      <!--HAMBURGER INSIDE SIDEBAR? No, user wants to click hamburger to OPEN sidebar.
+          So hamburger is separate.
+      -->
+
+      <!--INICIO SESION-->
+      <div class="container-ini">
+        <span class="ini_ses mb-8">INICIO DE SESIÓN</span>
+
+        <!--FORMULARIO-->
+        <form id="logeo" autocomplete="on">
+          <div class="input_label familia">
+            <input
+              type="number"
+              class="codigo font-bold"
+              name="cod"
+              id="cod"
+              autocomplete="username"
+              maxlength="6"
+              placeholder=" "
+              [(ngModel)]="formData.codigo"
+              (keypress)="handleKeyPress($event)"
+            />
+            <div class="box_blanco">
+              <div class="box fa-solid fa-barcode"></div>
+              <label for="cod" class="">Código</label>
+            </div>
+          </div>
+          <div class="input_label">
+            <input
+              type="text"
+              class="documento"
+              name="doc"
+              id="doc"
+              autocomplete="on"
+              maxlength=""
+              style="border-bottom: none"
+              placeholder=" "
+              [(ngModel)]="formData.documento"
+              (keypress)="handleKeyPress($event)"
+            />
+            <div class="box_blanco">
+              <div class="box fa-solid fa-id-card"></div>
+              <label for="doc" class="activo">Documento</label>
+            </div>
+          </div>
+          <div class="input_label">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="contraseña"
+              id="pass"
+              name="pas"
+              autocomplete="current-password"
+              style="border-bottom: none"
+              placeholder=" "
+              [(ngModel)]="formData.password"
+              (keypress)="handleKeyPress($event)"
+            />
+            <div class="eye" (click)="togglePassword()">
+              <span
+                [class]="
+                  showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
+                "
+              ></span>
+            </div>
+            <div class="box_blanco">
+              <div class="box fa-solid fa-key"></div>
+              <label for="pass" class="activo">Contraseña</label>
+            </div>
+          </div>
+          <a class="resetPass" (click)="resetPassword()"
+            ><span class="fa-solid fa-circle-question"></span>Olvidó su
+            contraseña</a
+          >
+        </form>
+      </div>
+      <!--INGRESAR-->
+      <button
+        class="ingresar"
+        id="ingresar"
+        (click)="handleLogin()"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? "Ingresando..." : "Ingresar" }}
+      </button>
+    </aside>
+  </div>
+
+  <!-- Notificación de error -->
+  <div id="notificacion" class="activo" *ngIf="showNotification">
+    <div class="nota" [ngClass]="notificationType">
+      <div class="line">
+        <span
+          class="fa-solid"
+          [ngClass]="{
+            'fa-triangle-exclamation': notificationType === 'warning',
+            'fa-circle-xmark': notificationType === 'error',
+            'fa-circle-check': notificationType === 'success'
+          }"
+        ></span>
+      </div>
+      <div class="nota_contenido">
+        {{ notificationMessage }}
+      </div>
+      <div class="nota_x fa-solid fa-xmark" (click)="closeNotification()"></div>
+    </div>
+  </div>
+
+  <!-- Loader/Cargador -->
+  <div class="cover_general" [class.activo]="isLoading">
+    <div class="cargador">
+      <div class="loader" [class.activo]="isLoading"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal-backdrop" *ngIf="showResetModal">
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <span>Restablecer Contraseña</span>
+      <i
+        class="fa-solid fa-circle-xmark close-icon"
+        (click)="closeResetModal()"
+      ></i>
+    </div>
+
+    <!-- Warning Banner -->
+    <div class="modal-warning">
+      <div class="red-bar"></div>
+      <span>Si eres docente no puedes realizar cambio de contraseña.</span>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <div class="modal-form">
+        <!-- Row 1: Codigo & Documento -->
+        <div class="input-group">
+          <i class="fa-solid fa-credit-card input-icon"></i>
+          <input type="text" placeholder="Código" />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-address-card input-icon"></i>
+          <input type="text" placeholder="Documento" />
+        </div>
+
+        <!-- Row 2: Fecha & Correo Inst -->
+        <div class="input-group">
+          <i class="fa-solid fa-calendar-days input-icon"></i>
+          <input
+            type="text"
+            placeholder="Fecha de expedición"
+            onfocus="(this.type='date')"
+            onblur="(this.type='text')"
+          />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" placeholder="Correo Institucional" />
+        </div>
+
+        <!-- Row 3: Correo Pers & Confirmar -->
+        <div class="input-group">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" placeholder="Correo Electrónico Personal" />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" placeholder="Confirmar Correo Personal" />
+        </div>
+      </div>
+
+      <div class="modal-info-text">
+        Se enviará un correo con el enlace para que pueda realizar el cambio de
+        contraseña
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <footer class="footer-custom modal-footer-custom">
+      <div class="footer-section left">
+        <div class="sia-logo-container">
+          <img
+            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png"
+            class="sia-img-modal"
+            alt="UFPSO Logo"
+            onerror="this.style.display='none'"
+          />
+          <div class="sia-fallback-logo" style="display: none">UFPSO</div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-section right">
+        <i class="fa-solid fa-desktop footer-icon"></i>
+        <div class="footer-text-group">
+          <div class="dev-label">Desarrollado por:</div>
+          <div class="dev-name">DIVISIÓN DE SISTEMAS -</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

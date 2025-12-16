@@ -1,0 +1,38 @@
+<header class="" style="background-color: #ec1c21">
+  <!--LOGO-->
+  <a
+    id="logo"
+    href="http://www.ufpso.edu.co"
+    target="_blank"
+    class="activo bg-white container1"
+  >
+    <!--UFPSO-->
+    <div class="logo_ufpso p-1">
+      <img
+        class="w-20 h-20"
+        src="assets/imagenes/ufpso/logoufps.png"
+        alt="UFPSO"
+        onerror="this.src='https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png'"
+      />
+    </div>
+  </a>
+
+  <!-- Agregado: Menú hamburguesa con SIA para versión móvil -->
+  <div
+    class="hamburger-container"
+    (click)="onMenuClick()"
+    *ngIf="!isSidebarOpen"
+  >
+    <div class="hamburger-menu">
+      <div id="nav-icon1">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <label class="sia-label">SIA</label>
+    </div>
+  </div>
+
+  <!-- SIA texto para desktop -->
+  <p class="text-white desktop-sia">SIA</p>
+</header>

@@ -1,0 +1,45 @@
+<div id="wrapper">
+
+  <div class="flex_cont">
+    <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
+
+    <section class="activo" id="contenido">
+      <!-- DASHBOARD CONTENT PLACEHOLDER -->
+      <div class="welcome-container">
+        <h1>Bienvenido al SIA</h1>
+        <p>Sistema de Información Académico</p>
+      </div>
+    </section>
+
+    <footer class="footer-custom">
+      <div class="footer-section left">
+        <div class="sia-logo-container">
+          <img src="assets/imagenes/ufpso/logo_sia.png" class="sia-img" alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <div class="sia-fallback-logo" style="display: none">SIA</div>
+        </div>
+        <div class="footer-text-group">
+          <div class="sia-title">SISTEMA DE INFORMACIÓN ACADÉMICO (BETA)</div>
+          <div class="sia-subtitle">
+            Universidad Francisco de Paula Santander - Ocaña, Colombia
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-section right">
+        <i class="fa-solid fa-desktop footer-icon"></i>
+        <div class="footer-text-group">
+          <div class="dev-label">Desarrollado por:</div>
+          <div class="dev-name">DIVISIÓN DE SISTEMAS -</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="flex_aside" [class.active]="isSidebarOpen">
+    <div class="sidebar-backdrop" *ngIf="isSidebarOpen" (click)="closeSidebar()"></div>
+
+    <app-sidebar [isLoggedIn]="true"></app-sidebar>
+  </div>
+
+</div>

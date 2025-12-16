@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+
+/* -- Fuente Perzonalizada -- */
+
+@font-face {
+  font-family: "Kelson Sans";
+  src: url("/fonts/KelsonSans-Regular.eot");
+  src: url("/fonts/KelsonSans-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/KelsonSans-Regular.woff") format("woff"),
+    url("/fonts/KelsonSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Myriad Pro Bold";
+  src: url("/fonts/MYRIADPROBOLD.eot");
+  src: url("/fonts/MYRIADPROBOLD.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/MYRIADPROBOLD.woff2") format("woff2"),
+    url("/fonts/MYRIADPROBOLD.woff") format("woff"),
+    url("/fonts/MYRIADPROBOLD.ttf") format("truetype"),
+    url("/fonts/MYRIADPROBOLD.svg#MYRIADPROBOLD") format("svg");
+}
+
+@font-face {
+  font-family: "Myriad Pro Bold Cond";
+  src: url("/fonts/MYRIADPROBOLDCOND.eot");
+  src: url("/fonts/MYRIADPROBOLDCOND.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/MYRIADPROBOLDCOND.woff2") format("woff2"),
+    url("/fonts/MYRIADPROBOLDCOND.woff") format("woff"),
+    url("/fonts/MYRIADPROBOLDCOND.ttf") format("truetype"),
+    url("/fonts/MYRIADPROBOLDCOND.svg#MYRIADPROBOLDCOND") format("svg");
+}
+
+@font-face {
+  font-family: "Myriad Pro";
+  src: url("/fonts/MYRIADPROREGULAR.eot");
+  src: url("/fonts/MYRIADPROREGULAR.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/MYRIADPROREGULAR.woff2") format("woff2"),
+    url("/fonts/MYRIADPROREGULAR.woff") format("woff"),
+    url("/fonts/MYRIADPROREGULAR.ttf") format("truetype"),
+    url("/fonts/MYRIADPROREGULAR.svg#MYRIADPROREGULAR") format("svg");
+}
+
+@font-face {
+  font-family: "Myriad Pro Cond";
+  src: url("/fonts/MYRIADPROCOND.eot");
+  src: url("/fonts/MYRIADPROCOND.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/MYRIADPROCOND.woff2") format("woff2"),
+    url("/fonts/MYRIADPROCOND.woff") format("woff"),
+    url("/fonts/MYRIADPROCOND.ttf") format("truetype"),
+    url("/fonts/MYRIADPROCOND.svg#MYRIADPROCOND") format("svg");
+}
+
+@font-face {
+  font-family: "IcoMoon";
+  src: url("/fonts/icomoon.eot");
+  src: url("/fonts/icomoon.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/icomoon.woff") format("woff"),
+    url("/fonts/icomoon.ttf") format("truetype"),
+    url("/fonts/icomoon.svg#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
