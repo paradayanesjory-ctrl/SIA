@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Student, UserCredentials } from '../models/student.model';
+import { MOCK_STUDENTS } from '../data/mock-students';
+import { MOCK_USERS } from '../data/mock-users';
 
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -12,7 +16,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   showPassword = false;
   isLoading = false;
   showNotification = false;
@@ -25,25 +29,35 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  // Lista de usuarios válidos
-  private users = [
-    { codigo: '192099', documento: '1091355245', password: 'Jordy123#' },
-    { codigo: '192260', documento: '5073908', password: '12345678' },
-    { codigo: '191919', documento: '1092355246', password: '12345678' }
-  ];
+  ngOnInit(): void {
+    // Automatically logout when visiting the login page
+    this.authService.logout();
+  }
+
+  // Lista de usuarios válidos (importada de datos estáticos)
+  private users: UserCredentials[] = MOCK_USERS;
+
+  // Referencia a los datos completos de estudiantes
+  private students: Student[] = MOCK_STUDENTS;
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  validateCredentials(): boolean {
-    return this.users.some(user => 
-      user.codigo === String(this.formData.codigo) &&
-      user.documento === String(this.formData.documento) &&
-      user.password === this.formData.password
+  validateCredentials(): Student | null {
+    const user = this.users.find(u => 
+      u.codigo === String(this.formData.codigo) &&
+      u.documento === String(this.formData.documento) &&
+      u.password === this.formData.password
     );
+
+    if (user) {
+      // Find and return the full student data
+      return this.students.find(s => s.codigo === user.codigo) || null;
+    }
+    return null;
   }
 
   showNotificationMessage(message: string, type: 'success' | 'error' | 'warning'): void {
@@ -67,15 +81,18 @@ export class LoginComponent {
 
     // Simular llamada a API
     setTimeout(() => {
-      if (this.validateCredentials()) {
+      const student = this.validateCredentials();
+      
+      if (student) {
         this.showNotificationMessage(
-          `¡Bienvenido! Código: ${this.formData.codigo}`,
+          `¡Bienvenido ${student.fullName}!`,
           'success'
         );
         
-        // Aquí puedes redirigir al dashboard
+        // Redirect to dashboard with delay
         setTimeout(() => {
-          console.log('Redirigiendo al dashboard...');
+          // Login with AuthService (pass full Student object) just before navigating
+          this.authService.login(student);
           this.router.navigate(['/dashboard']);
         }, 1500);
       } else {

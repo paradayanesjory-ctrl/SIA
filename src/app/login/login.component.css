@@ -291,7 +291,7 @@ footer {
   top: 0;
   display: flex;
   flex-direction: column;
-  z-index: 10;
+  z-index: 1001;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -411,11 +411,13 @@ footer {
 .input_label input[type="number"]::-webkit-inner-spin-button,
 .input_label input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 .input_label input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Box Icon */
@@ -916,8 +918,12 @@ footer {
     flex-direction: column;
   }
 
+  aside {
+    width: 85%;
+  }
+
   .flex_aside {
-    max-width: 100%;
+    width: 85%;
     height: auto;
     position: relative;
     box-shadow: none;

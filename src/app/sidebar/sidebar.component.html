@@ -16,8 +16,8 @@
     </div>
     <!--HAMBURGUESA-->
     <div id="hambur">
-      <span></span>
-      <span></span>
+      <span style="top: 1em; transform: rotate(45deg)"></span>
+      <span style="top: 1.7em; transform: rotate(131deg)"></span>
       <hr />
       <div>Menú</div>
     </div>
@@ -134,6 +134,30 @@
           <li class="menu-item">
             <i class="fa-solid fa-briefcase"></i>
             <span>Bienestar Universitario</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Restaurante</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-tractor"></i>
+            <span>Granja</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-user-graduate"></i>
+            <span>Graduado</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-database"></i>
+            <span>Acceso a Base de Datos</span>
+          </li>
+          <li
+            class="menu-item"
+            (click)="logout()"
+            style="cursor: pointer; color: #ec1c21"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Salir</span>
           </li>
         </ul>
       </div>

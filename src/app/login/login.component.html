@@ -93,7 +93,7 @@
           <!-- Using CSS to replicate the SIA box if image is not ideal, but keeping img for safety if user has it. 
                 The user image shows a specific gray box with SIA. I will use a FontAwesome icon or CSS box if image fails. -->
           <img
-            src="assets/imagenes/ufpso/logo_sia.png"
+            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png"
             class="sia-img"
             alt="SIA Logo"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -190,7 +190,7 @@
           <div class="input_label">
             <input
               type="text"
-              class="documento"
+              class="documento font-bold"
               name="doc"
               id="doc"
               autocomplete="on"
@@ -208,7 +208,7 @@
           <div class="input_label">
             <input
               [type]="showPassword ? 'text' : 'password'"
-              class="contraseña"
+              class="contraseña font-bold"
               id="pass"
               name="pas"
               autocomplete="current-password"

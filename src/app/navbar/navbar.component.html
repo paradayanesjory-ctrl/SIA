@@ -10,12 +10,25 @@
     <div class="logo_ufpso p-1">
       <img
         class="w-20 h-20"
-        src="assets/imagenes/ufpso/logoufps.png"
+        src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png"
         alt="UFPSO"
-        onerror="this.src='https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png'"
       />
     </div>
   </a>
+
+  <!-- User Profile Image (Desktop) -->
+  <div class="user-profile-desktop" *ngIf="student">
+    <img
+      [src]="userImageUrl"
+      alt="Usuario"
+      class="user-avatar"
+      onerror="this.src='img/default-user.png'"
+    />
+    <div class="flex flex-col">
+      <span class="user-name">{{ userName }}</span>
+      <span class="text-xs text-gray-200" *ngIf="career">{{ career }}</span>
+    </div>
+  </div>
 
   <!-- Agregado: Menú hamburguesa con SIA para versión móvil -->
   <div
