@@ -1,66 +1,136 @@
 <div id="wrapper">
+  <div class="flex_cont">
+    <app-navbar
+      [isSidebarOpen]="isSidebarOpen"
+      (menuToggled)="toggleSidebar()"
+    ></app-navbar>
 
-  <div class="flex_cont text-sm">
-    <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
-    <h1 class="text-2xl font-sans font-semibold" style="margin-left: 20px; margin-top: 20px;">Inicio</h1>
-
-    <section class="flex gap-5 px-5" id="contenido">
-      <div class="w-[30%]">
-        <h1>datos personales</h1>
+    <section class="activo" id="contenido">
+      <!-- Nuevo diseño de dashboard con layout de dos columnas -->
+      <div class="dashboard-header">
+        <h1>Inicio</h1>
       </div>
-      <div class="w-[70%]">
-        <!-- DASHBOARD CONTENT PLACEHOLDER -->
 
-
-        <!--alert para liquidacion-->
-        <div class="alertFijo card bg-stone-50 border-black border-0.5 my-10" id="liq_inicio">
-          <div class="header">
-            <label class="headerDPersonal">Liquidación</label>
+      <div class="dashboard-grid" *ngIf="student; else welcome">
+        <!-- Tarjeta principal del estudiante -->
+        <div class="student-card">
+          <div class="student-avatar">
+            <img
+              [src]="
+                student.imageUrl ||
+                'https://ui-avatars.com/api/?name=' +
+                  student.fullName +
+                  '&size=120&background=fff&color=333'
+              "
+              [alt]="student.fullName"
+            />
           </div>
-          <div class="contentAlert">
-            <img class="link-liq" src="public/views/imagenes/pdf.png">
-            <div>Haz click <a id="link-liq">Aquí</a> o puedes ingresar en <strong>Datos Académicos</strong> opción
+
+          <div class="student-welcome">
+            <p>
+              Bienvenido <strong>{{ student.fullName.split(" ")[0] }}</strong
+              >, a la nueva versión del SIA
+            </p>
+          </div>
+
+          <div class="student-info">
+            <div class="info-row">
+              <i class="fa-solid fa-barcode"></i>
+              <div class="info-content">
+                <span class="info-label">Código:</span>
+                <span class="info-value">{{ student.codigo }}</span>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <i class="fa-solid fa-book"></i>
+              <div class="info-content">
+                <span class="info-label">Estudiante de:</span>
+                <span class="info-value">{{ student.career }}</span>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <div class="info-content">
+                <span class="info-label">Sanción Académica:</span>
+                <span class="info-value">{{
+                  student.academicSanction || ""
+                }}</span>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <div class="info-content">
+                <span class="info-label">Requisitos para grado:</span>
+                <span class="info-value">
+                  Puedes consultarlos <a href="#" class="info-link">aquí</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas de información lateral -->
+        <div class="info-cards">
+          <div class="info-card">
+            <h3>Liquidación</h3>
+            <div class="card-icon">
+              <i class="fa-solid fa-file-invoice"></i>
+            </div>
+            <p>
+              Haz click <a href="#" class="card-link">Aquí</a> o puedes ingresar
+              en <strong>Datos Académicos</strong> opción
               <strong>Liquidación</strong>
-            </div>
+            </p>
           </div>
-        </div>
-        <!--alert para cancelacion-->
-        <div class="alertFijo card bg-stone-50 border-black border-0.5" id="liq_inicio">
-          <div class="header">
-            <label class="headerDPersonal">Cancelación de materias</label>
-          </div>
-          <div class="contentAlert">
-            <img class="link-liq" src="public/views/imagenes/help.png">
-            <div>Haz click <a id="link-cancelacion">Aquí</a> o puedes ingresar en <strong>Trámites</strong> opción
-              <strong>Cancelación de materias</strong>
-            </div>
-          </div>
-        </div>
 
-        <!--alert para acuerdo 051-->
-        <div class="alertFijo card bg-stone-50 border-black border-0.5" id="liq_inicio">
-          <div class="header">
-            <label class="headerDPersonal">Estatuto Estudiantil</label>
-          </div>
-          <div class="contentAlert">
-            <img src="public/views/imagenes/pdf.png">
-            <div>Haz clic <a style="color: blue;
-                                        text-decoration: underline;
-                                        cursor: pointer;"
-                href="https://ufpso.edu.co/ftp/pdf/estatutos/Acuerdo%20No.%2051%20del%2013%20de%20septiembre%20de%202019.pdf"
-                target="_blank">Aquí</a>
-              para conocer el Acuerdo No. 51 del 13 de septiembre de 2019
+          <div class="info-card">
+            <h3>Cancelación de materias</h3>
+            <div class="card-icon">
+              <i class="fa-solid fa-circle-question"></i>
             </div>
+            <p>
+              Haz click <a href="#" class="card-link">Aquí</a> o puedes ingresar
+              en <strong>Trámites</strong> opción
+              <strong>Cancelación de materias</strong>
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Estatuto Estudiantil</h3>
+            <div class="card-icon">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <p>
+              Haz clic <a href="#" class="card-link">Aquí</a> para conocer el
+              Acuerdo No. 51 del 13 de septiembre de 2019
+            </p>
           </div>
         </div>
       </div>
+
+      <ng-template #welcome>
+        <div class="welcome-container">
+          <h1>Bienvenido al SIA</h1>
+          <p>
+            Seleccione una opción del menú o inicie sesión para ver su
+            información.
+          </p>
+        </div>
+      </ng-template>
     </section>
 
     <footer class="footer-custom">
       <div class="footer-section left">
         <div class="sia-logo-container">
-          <img src="assets/imagenes/ufpso/logo_sia.png" class="sia-img" alt="SIA Logo"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <img
+            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png"
+            class="sia-img"
+            alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          />
           <div class="sia-fallback-logo" style="display: none">SIA</div>
         </div>
         <div class="footer-text-group">
@@ -82,9 +152,12 @@
   </div>
 
   <div class="flex_aside" [class.active]="isSidebarOpen">
-    <div class="sidebar-backdrop" *ngIf="isSidebarOpen" (click)="closeSidebar()"></div>
+    <div
+      class="sidebar-backdrop"
+      *ngIf="isSidebarOpen"
+      (click)="closeSidebar()"
+    ></div>
 
     <app-sidebar [isLoggedIn]="true"></app-sidebar>
   </div>
-
 </div>

@@ -16,8 +16,8 @@
     </div>
     <!--HAMBURGUESA-->
     <div id="hambur">
-      <span></span>
-      <span></span>
+      <span style="top: 1em; transform: rotate(45deg)"></span>
+      <span style="top: 1.7em; transform: rotate(131deg)"></span>
       <hr />
       <div>Menú</div>
     </div>
@@ -29,7 +29,7 @@
 
     <!-- CONTAINER INICIO (Shared Wrapper) -->
     <div class="container-ini">
-      <span class="ini_ses mb-8">{{
+      <span class="ini_ses">{{
         isLoggedIn ? "MENÚ" : "INICIO DE SESIÓN"
         }}</span>
 
@@ -71,7 +71,7 @@
       </form>
 
       <!-- MENU LIST -->
-      <div id="logeo" *ngIf="isLoggedIn" style="margin-top: -10px" class="text-red-500!">
+      <div id="logeo" *ngIf="isLoggedIn" style="width: 100%; margin: 0; gap: 0;" class="text-red-500!">
         <ul class="menu-list">
           <li class="menu-item active">
             <i class="fa-solid fa-house"></i>
@@ -104,6 +104,34 @@
           <li class="menu-item">
             <i class="fa-solid fa-briefcase"></i>
             <span>Bienestar Universitario</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Restaurante</span>
+          </li>
+          <li class="menu-item">
+            <i class="fas fa-book"></i>
+            <span>Vacacional</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Trámites</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-tractor"></i>
+            <span>Granja</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-user-graduate"></i>
+            <span>Graduado</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-database"></i>
+            <span>Acceso a Base de Datos</span>
+          </li>
+          <li class="menu-item" (click)="logout()" style="cursor: pointer; color: #ec1c21">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Salir</span>
           </li>
         </ul>
       </div>
