@@ -1,13 +1,58 @@
 <div id="wrapper">
 
-  <div class="flex_cont">
+  <div class="flex_cont text-sm">
     <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
+    <h1 class="text-2xl font-sans font-semibold" style="margin-left: 20px; margin-top: 20px;">Inicio</h1>
 
-    <section class="activo" id="contenido">
-      <!-- DASHBOARD CONTENT PLACEHOLDER -->
-      <div class="welcome-container">
-        <h1>Bienvenido al SIA</h1>
-        <p>Sistema de Información Académico</p>
+    <section class="flex gap-5 px-5" id="contenido">
+      <div class="w-[30%]">
+        <h1>datos personales</h1>
+      </div>
+      <div class="w-[70%]">
+        <!-- DASHBOARD CONTENT PLACEHOLDER -->
+
+
+        <!--alert para liquidacion-->
+        <div class="alertFijo card bg-stone-50 border-black border-0.5 my-10" id="liq_inicio">
+          <div class="header">
+            <label class="headerDPersonal">Liquidación</label>
+          </div>
+          <div class="contentAlert">
+            <img class="link-liq" src="public/views/imagenes/pdf.png">
+            <div>Haz click <a id="link-liq">Aquí</a> o puedes ingresar en <strong>Datos Académicos</strong> opción
+              <strong>Liquidación</strong>
+            </div>
+          </div>
+        </div>
+        <!--alert para cancelacion-->
+        <div class="alertFijo card bg-stone-50 border-black border-0.5" id="liq_inicio">
+          <div class="header">
+            <label class="headerDPersonal">Cancelación de materias</label>
+          </div>
+          <div class="contentAlert">
+            <img class="link-liq" src="public/views/imagenes/help.png">
+            <div>Haz click <a id="link-cancelacion">Aquí</a> o puedes ingresar en <strong>Trámites</strong> opción
+              <strong>Cancelación de materias</strong>
+            </div>
+          </div>
+        </div>
+
+        <!--alert para acuerdo 051-->
+        <div class="alertFijo card bg-stone-50 border-black border-0.5" id="liq_inicio">
+          <div class="header">
+            <label class="headerDPersonal">Estatuto Estudiantil</label>
+          </div>
+          <div class="contentAlert">
+            <img src="public/views/imagenes/pdf.png">
+            <div>Haz clic <a style="color: blue;
+                                        text-decoration: underline;
+                                        cursor: pointer;"
+                href="https://ufpso.edu.co/ftp/pdf/estatutos/Acuerdo%20No.%2051%20del%2013%20de%20septiembre%20de%202019.pdf"
+                target="_blank">Aquí</a>
+              para conocer el Acuerdo No. 51 del 13 de septiembre de 2019
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
