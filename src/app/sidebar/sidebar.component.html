@@ -1,4 +1,4 @@
-<div class="flex_aside text-sm">
+<div class="flex_aside text-sm" [class.collapsed]="collapsed">
   <aside id="lateral" class="activo">
     <!--SIA-->
     <div class="hamburMobil">
@@ -31,49 +31,84 @@
     <div class="container-ini">
       <span class="ini_ses">{{
         isLoggedIn ? "MENÚ" : "INICIO DE SESIÓN"
-        }}</span>
+      }}</span>
 
       <!-- LOGIN FORM -->
       <form id="logeo" autocomplete="on" *ngIf="!isLoggedIn">
         <div class="input_label">
-          <input type="number" class="codigo" name="cod" id="cod" autocomplete="username" maxlength="6" placeholder=" "
-            [(ngModel)]="formData.codigo" (keypress)="handleKeyPress($event)" />
+          <input
+            type="number"
+            class="codigo"
+            name="cod"
+            id="cod"
+            autocomplete="username"
+            maxlength="6"
+            placeholder=" "
+            [(ngModel)]="formData.codigo"
+            (keypress)="handleKeyPress($event)"
+          />
           <div class="box_blanco">
             <div class="box fa-solid fa-barcode"></div>
             <label for="cod" class="">Código</label>
           </div>
         </div>
         <div class="input_label">
-          <input type="text" class="documento" name="doc" id="doc" autocomplete="on" maxlength=""
-            style="border-bottom: none" placeholder=" " [(ngModel)]="formData.documento"
-            (keypress)="handleKeyPress($event)" />
+          <input
+            type="text"
+            class="documento"
+            name="doc"
+            id="doc"
+            autocomplete="on"
+            maxlength=""
+            style="border-bottom: none"
+            placeholder=" "
+            [(ngModel)]="formData.documento"
+            (keypress)="handleKeyPress($event)"
+          />
           <div class="box_blanco">
             <div class="box fa-solid fa-id-card"></div>
             <label for="doc" class="activo">Documento</label>
           </div>
         </div>
         <div class="input_label">
-          <input [type]="showPassword ? 'text' : 'password'" class="contraseña" id="pass" name="pas"
-            autocomplete="current-password" style="border-bottom: none" placeholder=" " [(ngModel)]="formData.password"
-            (keypress)="handleKeyPress($event)" />
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="contraseña"
+            id="pass"
+            name="pas"
+            autocomplete="current-password"
+            style="border-bottom: none"
+            placeholder=" "
+            [(ngModel)]="formData.password"
+            (keypress)="handleKeyPress($event)"
+          />
           <div class="eye" (click)="togglePassword()">
-            <span [class]="
+            <span
+              [class]="
                 showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-              "></span>
+              "
+            ></span>
           </div>
           <div class="box_blanco">
             <div class="box fa-solid fa-key"></div>
             <label for="pass" class="activo">Contraseña</label>
           </div>
         </div>
-        <a class="resetPass" (click)="resetPassword()"><span class="fa-solid fa-circle-question"></span>Olvidó su
-          contraseña</a>
+        <a class="resetPass" (click)="resetPassword()"
+          ><span class="fa-solid fa-circle-question"></span>Olvidó su
+          contraseña</a
+        >
       </form>
 
       <!-- MENU LIST -->
-      <div id="logeo" *ngIf="isLoggedIn" style="width: 100%; margin: 0; gap: 0;" class="text-red-500!">
+      <div
+        id="logeo"
+        *ngIf="isLoggedIn"
+        style="width: 100%; margin: 0; gap: 0"
+        class="text-red-500!"
+      >
         <ul class="menu-list">
-          <li class="menu-item active">
+          <li class="menu-item active" routerLink="/dashboard">
             <i class="fa-solid fa-house"></i>
             <span>Inicio</span>
           </li>
@@ -81,7 +116,7 @@
             <i class="fa-solid fa-credit-card"></i>
             <span>Datos Académicos</span>
           </li>
-          <li class="menu-item">
+          <li class="menu-item" routerLink="/notas">
             <i class="fa-solid fa-medal"></i>
             <span>Notas</span>
           </li>
@@ -129,7 +164,11 @@
             <i class="fa-solid fa-database"></i>
             <span>Acceso a Base de Datos</span>
           </li>
-          <li class="menu-item" (click)="logout()" style="cursor: pointer; color: #ec1c21">
+          <li
+            class="menu-item"
+            (click)="logout()"
+            style="cursor: pointer; color: #ec1c21"
+          >
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Salir</span>
           </li>
@@ -138,20 +177,46 @@
     </div>
 
     <!--INGRESAR BUTTON (Only for Login)-->
-    <button class="ingresar" id="ingresar" (click)="handleLogin()" [disabled]="isLoading" *ngIf="!isLoggedIn">
+    <button
+      class="ingresar"
+      id="ingresar"
+      (click)="handleLogin()"
+      [disabled]="isLoading"
+      *ngIf="!isLoggedIn"
+    >
       {{ isLoading ? "Ingresando..." : "Ingresar" }}
     </button>
   </aside>
+
+  <!-- Toggle button: muestra/oculta el sidebar -->
+  <div
+    class="sidebar-toggle"
+    role="button"
+    tabindex="0"
+    (click)="toggleSidebar()"
+    (keydown.enter)="toggleSidebar()"
+    [attr.aria-pressed]="collapsed"
+  >
+    <i
+      [class]="
+        collapsed ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-left'
+      "
+    ></i>
+    <span class="label-vertical">Menú</span>
+  </div>
 
   <!-- Notificación de error -->
   <div id="notificacion" class="activo" *ngIf="showNotification">
     <div class="nota" [ngClass]="notificationType">
       <div class="line">
-        <span class="fa-solid" [ngClass]="{
+        <span
+          class="fa-solid"
+          [ngClass]="{
             'fa-triangle-exclamation': notificationType === 'warning',
             'fa-circle-xmark': notificationType === 'error',
             'fa-circle-check': notificationType === 'success'
-          }"></span>
+          }"
+        ></span>
       </div>
       <div class="nota_contenido">
         {{ notificationMessage }}
@@ -173,7 +238,10 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <span>Restablecer Contraseña</span>
-        <i class="fa-solid fa-circle-xmark close-icon" (click)="closeResetModal()"></i>
+        <i
+          class="fa-solid fa-circle-xmark close-icon"
+          (click)="closeResetModal()"
+        ></i>
       </div>
 
       <!-- Warning Banner -->
@@ -198,8 +266,12 @@
           <!-- Row 2: Fecha & Correo Inst -->
           <div class="input-group">
             <i class="fa-solid fa-calendar-days input-icon"></i>
-            <input type="text" placeholder="Fecha de expedición" onfocus="(this.type='date')"
-              onblur="(this.type='text')" />
+            <input
+              type="text"
+              placeholder="Fecha de expedición"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+            />
           </div>
           <div class="input-group">
             <i class="fa-solid fa-envelope input-icon"></i>
@@ -227,8 +299,12 @@
       <footer class="footer-custom modal-footer-custom">
         <div class="footer-section left">
           <div class="sia-logo-container">
-            <img src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png" class="sia-img-modal"
-              alt="UFPSO Logo" onerror="this.style.display='none'" />
+            <img
+              src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logoufps.png"
+              class="sia-img-modal"
+              alt="UFPSO Logo"
+              onerror="this.style.display='none'"
+            />
             <div class="sia-fallback-logo" style="display: none">UFPSO</div>
           </div>
         </div>

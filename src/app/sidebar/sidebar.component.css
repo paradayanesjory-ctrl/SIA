@@ -789,3 +789,69 @@
     margin: 1em 0;
   }
 }
+
+/* Sidebar toggle (collapsed state) */
+/* Oculto por defecto en escritorio; se muestra sólo en móvil */
+.sidebar-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .flex_aside {
+    position: relative;
+    transition: max-width 0.22s ease;
+  }
+
+  .flex_aside.collapsed {
+    max-width: 60px;
+  }
+
+  .flex_aside.collapsed #lateral {
+    width: 60px;
+  }
+
+  /* Oculta textos cuando está colapsado (mantiene iconos) */
+  .flex_aside.collapsed .menu-item span,
+  .flex_aside.collapsed .texto_sia span,
+  .flex_aside.collapsed .ini_ses,
+  .flex_aside.collapsed .container-ini #logeo,
+  .flex_aside.collapsed .ingresar,
+  .flex_aside.collapsed .box_blanco label {
+    display: none !important;
+  }
+
+  .sidebar-toggle {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 44px;
+    height: 44px;
+    background: #ec1c21;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1100;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    color: white;
+  }
+
+  .sidebar-toggle i {
+    transform: rotate(0);
+    color: white;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .sidebar-toggle .label-vertical {
+    display: none;
+  }
+
+  /* Reduce overflow issues cuando está colapsado */
+  .flex_aside.collapsed .menu-list {
+    overflow: visible;
+  }
+}

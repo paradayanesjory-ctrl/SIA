@@ -1,0 +1,227 @@
+<div id="wrapper">
+  <!-- Main Content Container -->
+  <div class="flex_cont">
+    <!-- Navbar -->
+    <app-navbar
+      [isSidebarOpen]="isSidebarOpen"
+      (menuToggled)="toggleSidebar()"
+    ></app-navbar>
+
+    <!-- Page Content -->
+    <section class="activo" id="contenido">
+      <div class="notas-container">
+        <h2 class="page-title">Notas</h2>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+          <button 
+            [class.active]="activeTab === 'actuales'" 
+            (click)="setActiveTab('actuales')">
+            <i class="icon-check"></i> Notas Actuales
+          </button>
+          <button 
+            [class.active]="activeTab === 'acumuladas'" 
+            (click)="setActiveTab('acumuladas')">
+            <i class="icon-list"></i> Notas Acumuladas
+          </button>
+          <button 
+            [class.active]="activeTab === 'historico'" 
+            (click)="setActiveTab('historico')">
+            <i class="icon-chart"></i> Promedio Histórico
+          </button>
+        </div>
+
+        <div class="tab-content">
+          
+          <!-- Notas Actuales -->
+          <div *ngIf="activeTab === 'actuales'" class="section-actuales">
+            <table class="styled-table red-header">
+              <thead>
+                <tr>
+                  <th>CODIGO</th>
+                  <th>NOMBRE</th>
+                  <th>NOTA1</th>
+                  <th>NOTA2</th>
+                  <th>NOTA3</th>
+                  <th>SETENTA</th>
+                  <th>EXAMEN</th>
+                  <th>DEFINITIVA</th>
+                  <th>HABILITACION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let nota of notasActuales">
+                  <td>{{ nota.codigo }}</td>
+                  <td>{{ nota.nombre }}</td>
+                  <td>{{ nota.nota1 }}</td>
+                  <td>{{ nota.nota2 }}</td>
+                  <td>{{ nota.nota3 }}</td>
+                  <td>{{ nota.setenta }}</td>
+                  <td>{{ nota.examen }}</td>
+                  <td>{{ nota.definitiva }}</td>
+                  <td>{{ nota.habilitacion }}</td>
+                </tr>
+                <tr *ngIf="notasActuales.length === 0">
+                    <td colspan="9">No hay datos disponibles para mostrar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Notas Acumuladas -->
+          <div *ngIf="activeTab === 'acumuladas'" class="section-acumuladas">
+            <div class="summary-cards">
+              <div class="card card-red">
+                <h3>Créditos Aprobados</h3>
+                <p>{{ creditosAprobados }}</p>
+              </div>
+              <div class="card card-red">
+                <h3>Promedio Acumulado</h3>
+                <p>{{ promedioAcumulado }}</p>
+              </div>
+            </div>
+
+            <div class="semester-nav">
+              <button class="nav-btn prev-btn" (click)="prevSemester()">❮</button>
+              <div class="semester-display">{{ semesterName }}</div>
+              <button class="nav-btn next-btn" (click)="nextSemester()">❯</button>
+              <button class="pdf-btn"><span class="pdf-icon">PDF</span></button>
+            </div>
+
+            <table class="styled-table red-header">
+              <thead>
+                <tr>
+                  <th>CODIGO</th>
+                  <th>MATERIA</th>
+                  <th>CREDITOS</th>
+                  <th>HORA</th>
+                  <th>DEFINITIVA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let nota of notasAcumuladas">
+                  <td>{{ nota.codigo }}</td>
+                  <td>{{ nota.materia }}</td>
+                  <td>{{ nota.creditos }}</td>
+                  <td>{{ nota.hora }}</td>
+                  <td>{{ nota.definitiva }}</td>
+                </tr>
+                <tr *ngIf="notasAcumuladas.length === 0">
+                    <td colspan="5">No hay datos disponibles para mostrar.</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="pagination-dots">
+              <span *ngFor="let s of semesters; let i = index" class="dot" [class.active]="i === activeSemesterIndex" (click)="goToSemester(i)"></span>
+            </div>
+          </div>
+
+          <!-- Promedio Histórico -->
+          <div *ngIf="activeTab === 'historico'" class="section-historico">
+            <div class="summary-cards">
+              <div class="card card-red">
+                <h3>Créditos Aprobados</h3>
+                <p>{{ creditosAprobados }}</p>
+              </div>
+              <div class="card card-red">
+                <h3>Promedio Acumulado</h3>
+                <p>{{ promedioAcumulado }}</p>
+              </div>
+            </div>
+
+            <!-- Updated chart with proper toggle icon -->
+            <div class="chart-container" *ngIf="historico.length > 0">
+              <h3 class="chart-title">Promedio Historico por semestre</h3>
+              <div class="chart-legend">
+                  <span class="legend-box"></span> Promedio
+              </div>
+              
+              <div class="bar-chart" [class.line]="chartIsLine">
+                <!-- Y Axis labels -->
+                <div class="y-axis">
+                    <span>5</span>
+                    <span>4</span>
+                    <span>3</span>
+                    <span>2</span>
+                    <span>1</span>
+                    <span>0</span>
+                </div>
+
+                <!-- Bar Chart -->
+                <div class="bars-area" *ngIf="!chartIsLine">
+                  <div class="bar-group" *ngFor="let item of historico">
+                    <div class="bar" [style.height.%]="(item.promedio / 5) * 100" [attr.data-value]="item.promedio"></div>
+                    <span class="x-label">{{ item.periodo }}</span>
+                  </div>
+                </div>
+
+                <!-- Line Chart -->
+                <svg *ngIf="chartIsLine" class="line-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <polyline [attr.points]="getPolylinePoints()" class="line-poly" fill="none" stroke="#7b61ff" stroke-width="1.8" />
+                  <g *ngFor="let item of historico; let i = index">
+                    <circle class="line-dot" [attr.cx]="pointFor(i).x" [attr.cy]="pointFor(i).y" r="1.6" fill="#7b61ff"></circle>
+                  </g>
+                </svg>
+
+                <!-- X-axis labels for line chart -->
+                <div class="line-labels" *ngIf="chartIsLine">
+                  <span class="line-label" *ngFor="let item of historico">{{ item.periodo }}</span>
+                </div>
+              </div>
+
+              <!-- Updated toggle button with icon only -->
+              <button class="chart-type-btn" (click)="toggleChartType()" [title]="chartIsLine ? 'Cambiar a barras' : 'Cambiar a líneas'">
+                <i [class]="chartIsLine ? 'fa-solid fa-chart-column' : 'fa-solid fa-chart-line'"></i>
+              </button>
+            </div>
+            <div *ngIf="historico.length === 0" style="text-align: center; padding: 20px;">
+                No hay historial disponible.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-custom">
+      <div class="footer-section left">
+        <div class="sia-logo-container">
+          <img
+            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png"
+            class="sia-img"
+            alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          />
+          <div class="sia-fallback-logo" style="display: none">SIA</div>
+        </div>
+        <div class="footer-text-group">
+          <div class="sia-title">SISTEMA DE INFORMACIÓN ACADÉMICO (BETA)</div>
+          <div class="sia-subtitle">
+            Universidad Francisco de Paula Santander - Ocaña, Colombia
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-section right">
+        <i class="fa-solid fa-desktop footer-icon"></i>
+        <div class="footer-text-group">
+          <div class="dev-label">Desarrollado por:</div>
+          <div class="dev-name">DIVISIÓN DE SISTEMAS -</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Sidebar Container -->
+  <div class="flex_aside" [class.active]="isSidebarOpen">
+    <div
+      class="sidebar-backdrop"
+      *ngIf="isSidebarOpen"
+      (click)="closeSidebar()"
+    ></div>
+
+    <app-sidebar [isLoggedIn]="true"></app-sidebar>
+  </div>
+</div>
