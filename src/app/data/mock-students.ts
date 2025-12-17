@@ -279,19 +279,59 @@ export const MOCK_STUDENTS: Student[] = [
         averageGrade: 4.1,
         subjects: [
           {
-            subjectName: 'Cálculo Integral',
-            subjectCode: 'MAT201',
-            credits: 4,
-            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0,
+            subjectName: 'Derecho constitúciónal colombiano I',
+            subjectCode: '241201',
+            credits: 3,
+            nota1: 4.0, nota2: 4.2, nota3: 4.5, setenta: 2.96, examen: 4.2,
+            finalGrade: 4.2,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Derecho civil bienes y prop. intelec',
+            subjectCode: '241202',
+            credits: 3,
+            nota1: 3.8, nota2: 4.0, nota3: 4.2, setenta: 2.8, examen: 4.0,
             finalGrade: 4.0,
             status: 'Aprobada'
           },
           {
-            subjectName: 'Programación Orientada a Objetos',
-            subjectCode: 'SIS201',
-            credits: 4,
-            nota1: 4.2, nota2: 4.2, nota3: 4.2, setenta: 2.94, examen: 4.2,
-            finalGrade: 4.2,
+            subjectName: 'Derechos humanos y dih',
+            subjectCode: '241203',
+            credits: 3,
+            nota1: 4.2, nota2: 4.4, nota3: 4.3, setenta: 3.01, examen: 4.3,
+            finalGrade: 4.3,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Historia del derecho colombiano',
+            subjectCode: '241204',
+            credits: 2,
+            nota1: 4.0, nota2: 4.0, nota3: 4.3, setenta: 2.87, examen: 4.1,
+            finalGrade: 4.1,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Comunicación oral y manejo corporal',
+            subjectCode: '241205',
+            credits: 2,
+            nota1: 4.5, nota2: 4.5, nota3: 4.5, setenta: 3.15, examen: 4.5,
+            finalGrade: 4.5,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Antropología',
+            subjectCode: '241206',
+            credits: 2,
+            nota1: 4.3, nota2: 4.4, nota3: 4.5, setenta: 3.08, examen: 4.4,
+            finalGrade: 4.4,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Derecho de familia y del menor',
+            subjectCode: '241207',
+            credits: 2,
+            nota1: 3.9, nota2: 4.1, nota3: 4.0, setenta: 2.8, examen: 4.0,
+            finalGrade: 4.0,
             status: 'Aprobada'
           }
         ]

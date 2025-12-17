@@ -41,37 +41,41 @@
           <!-- Notas Actuales -->
           <div *ngIf="activeTab === 'actuales'" class="section-actuales">
             <!-- Desktop Table View -->
-            <table class="styled-table red-header desktop-only">
-              <thead>
-                <tr>
-                  <th>CODIGO</th>
-                  <th>NOMBRE</th>
-                  <th>NOTA1</th>
-                  <th>NOTA2</th>
-                  <th>NOTA3</th>
-                  <th>SETENTA</th>
-                  <th>EXAMEN</th>
-                  <th>DEFINITIVA</th>
-                  <th>HABILITACION</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let nota of notasActuales">
-                  <td>{{ nota.codigo }}</td>
-                  <td>{{ nota.nombre }}</td>
-                  <td>{{ nota.nota1 }}</td>
-                  <td>{{ nota.nota2 }}</td>
-                  <td>{{ nota.nota3 }}</td>
-                  <td>{{ nota.setenta }}</td>
-                  <td>{{ nota.examen }}</td>
-                  <td>{{ nota.definitiva }}</td>
-                  <td>{{ nota.habilitacion }}</td>
-                </tr>
-                <tr *ngIf="notasActuales.length === 0">
-                  <td colspan="9">No hay datos disponibles para mostrar.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-container">
+              <table
+                class="styled-table red-header table-actuales desktop-only"
+              >
+                <thead>
+                  <tr>
+                    <th>CODIGO</th>
+                    <th>NOMBRE</th>
+                    <th>NOTA1</th>
+                    <th>NOTA2</th>
+                    <th>NOTA3</th>
+                    <th>SETENTA</th>
+                    <th>EXAMEN</th>
+                    <th>DEFINITIVA</th>
+                    <th>HABILITACION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let nota of notasActuales">
+                    <td>{{ nota.codigo }}</td>
+                    <td>{{ nota.nombre | uppercase }}</td>
+                    <td>{{ nota.nota1 }}</td>
+                    <td>{{ nota.nota2 }}</td>
+                    <td>{{ nota.nota3 }}</td>
+                    <td>{{ nota.setenta }}</td>
+                    <td>{{ nota.examen }}</td>
+                    <td>{{ nota.definitiva }}</td>
+                    <td>{{ nota.habilitacion }}</td>
+                  </tr>
+                  <tr *ngIf="notasActuales.length === 0">
+                    <td colspan="9">No hay datos disponibles para mostrar.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             <!-- Mobile Accordion View -->
             <div class="mobile-accordion mobile-only">
@@ -83,7 +87,9 @@
                 <div class="accordion-header" (click)="toggleItem(i)">
                   <div class="accordion-title">
                     <span class="accordion-code">{{ nota.codigo }}</span>
-                    <span class="accordion-name">{{ nota.nombre }}</span>
+                    <span class="accordion-name">{{
+                      nota.nombre | uppercase
+                    }}</span>
                   </div>
                   <i
                     class="fa-solid"
@@ -167,27 +173,31 @@
             </div>
 
             <!-- Desktop Table -->
-            <table class="styled-table red-header desktop-only">
-              <thead>
-                <tr>
-                  <th>CODIGO</th>
-                  <th>MATERIA</th>
-                  <th>CREDITOS</th>
-                  <th>DEFINITIVA</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let nota of notasAcumuladas">
-                  <td>{{ nota.codigo }}</td>
-                  <td>{{ nota.materia }}</td>
-                  <td>{{ nota.creditos }}</td>
-                  <td>{{ nota.definitiva }}</td>
-                </tr>
-                <tr *ngIf="notasAcumuladas.length === 0">
-                  <td colspan="4">No hay datos disponibles para mostrar.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-container">
+              <table
+                class="styled-table red-header table-acumuladas desktop-only"
+              >
+                <thead>
+                  <tr>
+                    <th>CODIGO</th>
+                    <th>MATERIA</th>
+                    <th>CREDITOS</th>
+                    <th>DEFINITIVA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let nota of notasAcumuladas">
+                    <td>{{ nota.codigo }}</td>
+                    <td>{{ nota.materia | uppercase }}</td>
+                    <td>{{ nota.creditos }}</td>
+                    <td>{{ nota.definitiva }}</td>
+                  </tr>
+                  <tr *ngIf="notasAcumuladas.length === 0">
+                    <td colspan="4">No hay datos disponibles para mostrar.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             <!-- Mobile Accordion View -->
             <div class="mobile-accordion mobile-only">
@@ -199,7 +209,9 @@
                 <div class="accordion-header" (click)="toggleItem(1000 + i)">
                   <div class="accordion-title">
                     <span class="accordion-code">{{ nota.codigo }}</span>
-                    <span class="accordion-name">{{ nota.materia }}</span>
+                    <span class="accordion-name">{{
+                      nota.materia | uppercase
+                    }}</span>
                   </div>
                   <i
                     class="fa-solid"

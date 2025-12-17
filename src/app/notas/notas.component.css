@@ -232,15 +232,20 @@
 }
 
 /* Tables */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
 .styled-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
   background-color: white;
   font-size: 13px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   table-layout: fixed;
-  /* Force full width distribution */
 }
 
 .styled-table thead tr {
@@ -264,25 +269,45 @@
   background-color: #fff;
 }
 
-.styled-table th:first-child,
-.styled-table td:first-child {
+/* Column width definitions for specific tables */
+
+/* 9-column table (Notas Actuales) */
+.table-actuales {
+  min-width: 900px; /* Ensure columns have enough space before scrolling */
+  table-layout: auto; /* Let content determine width for more columns */
+}
+
+.table-actuales td {
+  white-space: nowrap;
+}
+
+.table-actuales td:nth-child(2) {
+  text-align: left;
+  white-space: normal; /* Allow subject name to wrap */
+  min-width: 250px;
+}
+
+/* 4-column table (Notas Acumuladas) */
+.table-acumuladas {
+  table-layout: fixed;
+}
+
+.table-acumuladas th:first-child,
+.table-acumuladas td:first-child {
   text-align: left;
   width: 15%;
 }
 
-.styled-table th:nth-child(2),
-.styled-table td:nth-child(2) {
+.table-acumuladas th:nth-child(2),
+.table-acumuladas td:nth-child(2) {
   text-align: left;
   width: 55%;
 }
 
-.styled-table th:nth-child(3),
-.styled-table td:nth-child(3) {
-  width: 15%;
-}
-
-.styled-table th:nth-child(4),
-.styled-table td:nth-child(4) {
+.table-acumuladas th:nth-child(3),
+.table-acumuladas td:nth-child(3),
+.table-acumuladas th:nth-child(4),
+.table-acumuladas td:nth-child(4) {
   width: 15%;
 }
 
