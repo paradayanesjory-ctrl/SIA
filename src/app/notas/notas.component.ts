@@ -28,6 +28,9 @@ export class NotasComponent implements OnInit {
   promedioAcumulado = 0
   chartIsLine = false
 
+  // Accordion state for mobile
+  expandedItems: Set<number> = new Set()
+
   constructor(private authService: AuthService) { }
 
   toggleChartType() {
@@ -301,5 +304,17 @@ export class NotasComponent implements OnInit {
 
   closeSidebar() {
     this.isSidebarOpen = false
+  }
+
+  toggleItem(index: number) {
+    if (this.expandedItems.has(index)) {
+      this.expandedItems.delete(index)
+    } else {
+      this.expandedItems.add(index)
+    }
+  }
+
+  isExpanded(index: number): boolean {
+    return this.expandedItems.has(index)
   }
 }

@@ -180,21 +180,27 @@ p span {
   header {
     padding: 0;
     min-height: 60px;
+    height: 60px;
   }
 
   .container1 {
     height: 60px;
-    padding: 5px 0 5px 10px;
+    padding: 5px 0 5px 5px;
   }
 
   .logo_ufpso img {
-    height: 40px;
+    height: 45px;
+    padding-top: 5px;
+  }
+
+  #logo {
+    gap: 10px;
+    padding: 0 10px;
   }
 
   /* Hide user profile in mobile */
   .user-profile-desktop {
     display: none !important;
-
   }
 
   /* Mostrar hamburguesa en móvil */
@@ -212,7 +218,12 @@ p span {
   .right-section {
     display: flex;
     align-items: center;
-    gap: 1px;
-    padding: 0 0px;
+    gap: 5px;
+    padding: 0 10px;
+  }
+
+  .user-avatar {
+    width: 45px;
+    height: 45px;
   }
 }

@@ -214,36 +214,68 @@ export const MOCK_STUDENTS: Student[] = [
     fullName: 'David Perez Julio',
     career: 'Ingeniería de Sistemas',
     email: 'carlos.rodriguez@ufpso.edu.co',
-    totalCredits: 100,
-    overallAverage: 4.0,
+    totalCredits: 109,
+    overallAverage: 4.1,
     imageUrl: 'img/david.png',
     semesters: [
       {
         semesterNumber: 1,
-        period: '2019-1',
-        averageGrade: 3.9,
+        period: '2024-2',
+        averageGrade: 4.2,
         subjects: [
           {
-            subjectName: 'Cálculo Diferencial',
-            subjectCode: 'MAT101',
-            credits: 4,
-            nota1: 3.8, nota2: 3.8, nota3: 3.8, setenta: 2.66, examen: 3.8,
-            finalGrade: 3.8,
+            subjectName: 'Introducción al derecho',
+            subjectCode: '241101',
+            credits: 3,
+            nota1: 4.0, nota2: 4.2, nota3: 4.5, setenta: 2.96, examen: 4.2,
+            finalGrade: 4.2,
             status: 'Aprobada'
           },
           {
-            subjectName: 'Introducción a la Programación',
-            subjectCode: 'SIS101',
-            credits: 4,
-            nota1: 4.2, nota2: 4.2, nota3: 4.2, setenta: 2.94, examen: 4.2,
-            finalGrade: 4.2,
+            subjectName: 'Derecho civil personas',
+            subjectCode: '241102',
+            credits: 3,
+            nota1: 3.8, nota2: 4.0, nota3: 4.2, setenta: 2.8, examen: 4.0,
+            finalGrade: 4.0,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Derecho constitucional general',
+            subjectCode: '241103',
+            credits: 3,
+            nota1: 4.2, nota2: 4.4, nota3: 4.3, setenta: 3.01, examen: 4.3,
+            finalGrade: 4.3,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Derecho romano',
+            subjectCode: '241104',
+            credits: 3,
+            nota1: 4.0, nota2: 4.0, nota3: 4.3, setenta: 2.87, examen: 4.1,
+            finalGrade: 4.1,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Comunic. escrita y compren. de texto',
+            subjectCode: '241105',
+            credits: 2,
+            nota1: 4.5, nota2: 4.5, nota3: 4.5, setenta: 3.15, examen: 4.5,
+            finalGrade: 4.5,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'Cátedra institucional',
+            subjectCode: '241106',
+            credits: 3,
+            nota1: 4.3, nota2: 4.4, nota3: 4.5, setenta: 3.08, examen: 4.4,
+            finalGrade: 4.4,
             status: 'Aprobada'
           }
         ]
       },
       {
         semesterNumber: 2,
-        period: '2019-2',
+        period: '2025-1',
         averageGrade: 4.1,
         subjects: [
           {
@@ -260,6 +292,61 @@ export const MOCK_STUDENTS: Student[] = [
             credits: 4,
             nota1: 4.2, nota2: 4.2, nota3: 4.2, setenta: 2.94, examen: 4.2,
             finalGrade: 4.2,
+            status: 'Aprobada'
+          }
+        ]
+      },
+      {
+        semesterNumber: 3,
+        period: '2025-2',
+        averageGrade: 4.2,
+        subjects: [
+          {
+            subjectName: 'METODOLOGIA DE LA INVESTIGACION',
+            subjectCode: '241406B',
+            credits: 3,
+            nota1: 3.9, nota2: 4.3, nota3: 4.0, setenta: 2.84, examen: 4.1,
+            finalGrade: 4.0,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'DERECHO CIVIL CONTRATOS PROCESAL I',
+            subjectCode: '241402B',
+            credits: 3,
+            nota1: 3.5, nota2: 3.9, nota3: 4.8, setenta: 2.9, examen: 4.7,
+            finalGrade: 4.1,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'DERECHO PENAL GENERAL I',
+            subjectCode: '241303B',
+            credits: 3,
+            nota1: 4.2, nota2: 3.5, nota3: 4.5, setenta: 2.84, examen: 5.0,
+            finalGrade: 4.3,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'DERECHOS HUMANOS Y MECANISMOS DE PRO',
+            subjectCode: '241306C',
+            credits: 3,
+            nota1: 5.0, nota2: 5.0, nota3: 4.0, setenta: 3.3, examen: 4.8,
+            finalGrade: 4.7,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'DERECHO ADMINISTRATIVO I',
+            subjectCode: '241304A',
+            credits: 3,
+            nota1: 3.3, nota2: 5.0, nota3: 4.1, setenta: 2.89, examen: 4.5,
+            finalGrade: 4.2,
+            status: 'Aprobada'
+          },
+          {
+            subjectName: 'SUCESIONES',
+            subjectCode: '241305B',
+            credits: 3,
+            nota1: 2.8, nota2: 4.4, nota3: 4.8, setenta: 2.7, examen: 4.0,
+            finalGrade: 3.9,
             status: 'Aprobada'
           }
         ]

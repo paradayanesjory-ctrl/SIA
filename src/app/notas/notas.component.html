@@ -12,13 +12,16 @@
         <!-- Tabs Navigation -->
         <div class="tabs">
           <button [class.active]="activeTab === 'actuales'" (click)="setActiveTab('actuales')">
-            <i class="fa-regular fa-pen-to-square"></i> Notas Actuales
+            <i class="fa-regular fa-pen-to-square"></i>
+            <span class="tab-text">Notas Actuales</span>
           </button>
           <button [class.active]="activeTab === 'acumuladas'" (click)="setActiveTab('acumuladas')">
-            <i class="fa-solid fa-list"></i> Notas Acumuladas
+            <i class="fa-solid fa-list"></i>
+            <span class="tab-text">Notas Acumuladas</span>
           </button>
           <button [class.active]="activeTab === 'historico'" (click)="setActiveTab('historico')">
-            <i class="fa-solid fa-chart-line"></i> Promedio Histórico
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="tab-text">Promedio Histórico</span>
           </button>
         </div>
 
@@ -26,7 +29,8 @@
 
           <!-- Notas Actuales -->
           <div *ngIf="activeTab === 'actuales'" class="section-actuales">
-            <table class="styled-table red-header">
+            <!-- Desktop Table View -->
+            <table class="styled-table red-header desktop-only">
               <thead>
                 <tr>
                   <th>CODIGO</th>
@@ -57,6 +61,53 @@
                 </tr>
               </tbody>
             </table>
+
+            <!-- Mobile Accordion View -->
+            <div class="mobile-accordion mobile-only">
+              <div class="accordion-nombre-header">NOMBRE</div>
+              <div class="accordion-item" *ngFor="let nota of notasActuales; let i = index">
+                <div class="accordion-header" (click)="toggleItem(i)">
+                  <div class="accordion-title">
+                    <span class="accordion-code">{{ nota.codigo }}</span>
+                    <span class="accordion-name">{{ nota.nombre }}</span>
+                  </div>
+                  <i class="fa-solid" [ngClass]="isExpanded(i) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </div>
+                <div class="accordion-content" *ngIf="isExpanded(i)">
+                  <div class="detail-row">
+                    <span class="detail-label">NOTA 1 :</span>
+                    <span class="detail-value">{{ nota.nota1 }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">NOTA 2 :</span>
+                    <span class="detail-value">{{ nota.nota2 }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">NOTA 3 :</span>
+                    <span class="detail-value">{{ nota.nota3 }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">SETENTA :</span>
+                    <span class="detail-value">{{ nota.setenta }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">EXAMEN :</span>
+                    <span class="detail-value">{{ nota.examen }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">DEFINITIVA :</span>
+                    <span class="detail-value">{{ nota.definitiva }}</span>
+                  </div>
+                  <div class="detail-row" *ngIf="nota.habilitacion">
+                    <span class="detail-label">HABILITACION :</span>
+                    <span class="detail-value">{{ nota.habilitacion }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="notasActuales.length === 0" class="no-data-mobile">
+                No hay datos disponibles para mostrar.
+              </div>
+            </div>
           </div>
 
           <!-- Notas Acumuladas -->
@@ -70,22 +121,37 @@
                 <h3>Promedio Acumulado</h3>
                 <p>{{ promedioAcumulado }}</p>
               </div>
+              <!-- PDF icon for mobile -->
+              <div class="pdf-icon-mobile mobile-only">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
             </div>
 
-            <div class="semester-nav">
-              <button class="nav-btn prev-btn" (click)="prevSemester()">❮</button>
+            <!-- Desktop semester navigation -->
+            <div class="semester-nav desktop-only">
+              <button *ngIf="activeSemesterIndex > 0" class="nav-btn prev-btn" (click)="prevSemester()">❮</button>
               <div class="semester-display">{{ semesterName }}</div>
-              <button class="nav-btn next-btn" (click)="nextSemester()">❯</button>
+              <button *ngIf="activeSemesterIndex < semesters.length - 1" class="nav-btn next-btn"
+                (click)="nextSemester()">❯</button>
               <button class="pdf-btn"><span class="pdf-icon">PDF</span></button>
             </div>
 
-            <table class="styled-table red-header">
+            <!-- Mobile semester navigation -->
+            <div class="semester-nav-mobile mobile-only">
+              <button *ngIf="activeSemesterIndex > 0" class="nav-btn-mobile prev-btn-mobile"
+                (click)="prevSemester()">❮</button>
+              <div class="semester-display-mobile">{{ semesterName }}</div>
+              <button *ngIf="activeSemesterIndex < semesters.length - 1" class="nav-btn-mobile next-btn-mobile"
+                (click)="nextSemester()">❯</button>
+            </div>
+
+            <!-- Desktop Table -->
+            <table class="styled-table red-header desktop-only">
               <thead>
                 <tr>
                   <th>CODIGO</th>
                   <th>MATERIA</th>
                   <th>CREDITOS</th>
-                  <th>HORA</th>
                   <th>DEFINITIVA</th>
                 </tr>
               </thead>
@@ -94,14 +160,40 @@
                   <td>{{ nota.codigo }}</td>
                   <td>{{ nota.materia }}</td>
                   <td>{{ nota.creditos }}</td>
-                  <td>{{ nota.hora }}</td>
                   <td>{{ nota.definitiva }}</td>
                 </tr>
                 <tr *ngIf="notasAcumuladas.length === 0">
-                  <td colspan="5">No hay datos disponibles para mostrar.</td>
+                  <td colspan="4">No hay datos disponibles para mostrar.</td>
                 </tr>
               </tbody>
             </table>
+
+            <!-- Mobile Accordion View -->
+            <div class="mobile-accordion mobile-only">
+              <div class="accordion-nombre-header">MATERIA</div>
+              <div class="accordion-item" *ngFor="let nota of notasAcumuladas; let i = index">
+                <div class="accordion-header" (click)="toggleItem(1000 + i)">
+                  <div class="accordion-title">
+                    <span class="accordion-code">{{ nota.codigo }}</span>
+                    <span class="accordion-name">{{ nota.materia }}</span>
+                  </div>
+                  <i class="fa-solid" [ngClass]="isExpanded(1000 + i) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </div>
+                <div class="accordion-content" *ngIf="isExpanded(1000 + i)">
+                  <div class="detail-row">
+                    <span class="detail-label">CREDITOS :</span>
+                    <span class="detail-value">{{ nota.creditos }}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">DEFINITIVA :</span>
+                    <span class="detail-value">{{ nota.definitiva }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="notasAcumuladas.length === 0" class="no-data-mobile">
+                No hay datos disponibles para mostrar.
+              </div>
+            </div>
 
             <div class="pagination-dots">
               <span *ngFor="let s of semesters; let i = index" class="dot" [class.active]="i === activeSemesterIndex"
