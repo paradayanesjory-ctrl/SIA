@@ -18,17 +18,39 @@
 
   <!-- Contenedor agrupado para SIA y User Profile -->
   <div class="right-section">
-    <!-- User Profile Image (Desktop) -->
-    <div class="user-profile-desktop" *ngIf="student">
-      <img
-        [src]="userImageUrl"
-        alt="Usuario"
-        class="user-avatar"
-        onerror="this.src='img/default-user.png'"
-      />
+    <!-- Desktop: SIA Text and Profile -->
+    <div class="desktop-only flex items-center gap-2">
+      <div class="flex flex-col">
+        <p class="text-white desktop-sia">SIA</p>
+      </div>
+      <div class="user-profile-desktop" *ngIf="student">
+        <img
+          [src]="userImageUrl"
+          alt="Usuario"
+          class="user-avatar"
+          onerror="this.src='img/default-user.png'"
+        />
+      </div>
     </div>
-    <div class="flex flex-col">
-      <p class="text-white desktop-sia">SIA</p>
+
+    <!-- Mobile: Conditional Triggers -->
+    <div class="mobile-only">
+      <!-- Logged In: Only SIA label as toggle -->
+      <div class="sia-mobile-toggle" *ngIf="student" (click)="onMenuClick()">
+        <label class="sia-label-logged">SIA</label>
+      </div>
+
+      <!-- Logged Out: Hamburger + SIA label -->
+      <div class="hamburger-container" *ngIf="!student" (click)="onMenuClick()">
+        <div class="hamburger-menu">
+          <div id="nav-icon1">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <label class="sia-label">SIA</label>
+        </div>
+      </div>
     </div>
   </div>
 </header>
