@@ -2,10 +2,7 @@
   <!-- Main Content Container -->
   <div class="flex_cont">
     <!-- Navbar -->
-    <app-navbar
-      [isSidebarOpen]="isSidebarOpen"
-      (menuToggled)="toggleSidebar()"
-    ></app-navbar>
+    <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
 
     <!-- Page Content -->
     <section class="activo" id="contenido">
@@ -14,25 +11,19 @@
 
         <!-- Tabs Navigation -->
         <div class="tabs">
-          <button 
-            [class.active]="activeTab === 'actuales'" 
-            (click)="setActiveTab('actuales')">
-            <i class="icon-check"></i> Notas Actuales
+          <button [class.active]="activeTab === 'actuales'" (click)="setActiveTab('actuales')">
+            <i class="fa-regular fa-pen-to-square"></i> Notas Actuales
           </button>
-          <button 
-            [class.active]="activeTab === 'acumuladas'" 
-            (click)="setActiveTab('acumuladas')">
-            <i class="icon-list"></i> Notas Acumuladas
+          <button [class.active]="activeTab === 'acumuladas'" (click)="setActiveTab('acumuladas')">
+            <i class="fa-solid fa-list"></i> Notas Acumuladas
           </button>
-          <button 
-            [class.active]="activeTab === 'historico'" 
-            (click)="setActiveTab('historico')">
-            <i class="icon-chart"></i> Promedio Histórico
+          <button [class.active]="activeTab === 'historico'" (click)="setActiveTab('historico')">
+            <i class="fa-solid fa-chart-line"></i> Promedio Histórico
           </button>
         </div>
 
         <div class="tab-content">
-          
+
           <!-- Notas Actuales -->
           <div *ngIf="activeTab === 'actuales'" class="section-actuales">
             <table class="styled-table red-header">
@@ -62,7 +53,7 @@
                   <td>{{ nota.habilitacion }}</td>
                 </tr>
                 <tr *ngIf="notasActuales.length === 0">
-                    <td colspan="9">No hay datos disponibles para mostrar.</td>
+                  <td colspan="9">No hay datos disponibles para mostrar.</td>
                 </tr>
               </tbody>
             </table>
@@ -107,13 +98,14 @@
                   <td>{{ nota.definitiva }}</td>
                 </tr>
                 <tr *ngIf="notasAcumuladas.length === 0">
-                    <td colspan="5">No hay datos disponibles para mostrar.</td>
+                  <td colspan="5">No hay datos disponibles para mostrar.</td>
                 </tr>
               </tbody>
             </table>
-            
+
             <div class="pagination-dots">
-              <span *ngFor="let s of semesters; let i = index" class="dot" [class.active]="i === activeSemesterIndex" (click)="goToSemester(i)"></span>
+              <span *ngFor="let s of semesters; let i = index" class="dot" [class.active]="i === activeSemesterIndex"
+                (click)="goToSemester(i)"></span>
             </div>
           </div>
 
@@ -134,33 +126,46 @@
             <div class="chart-container" *ngIf="historico.length > 0">
               <h3 class="chart-title">Promedio Historico por semestre</h3>
               <div class="chart-legend">
-                  <span class="legend-box"></span> Promedio
+                <span class="legend-box"></span> Promedio
               </div>
-              
+
               <div class="bar-chart" [class.line]="chartIsLine">
                 <!-- Y Axis labels -->
                 <div class="y-axis">
-                    <span>5</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>2</span>
-                    <span>1</span>
-                    <span>0</span>
+                  <span>5</span>
+                  <span>4</span>
+                  <span>3</span>
+                  <span>2</span>
+                  <span>1</span>
+                  <span>0</span>
                 </div>
 
                 <!-- Bar Chart -->
                 <div class="bars-area" *ngIf="!chartIsLine">
                   <div class="bar-group" *ngFor="let item of historico">
-                    <div class="bar" [style.height.%]="(item.promedio / 5) * 100" [attr.data-value]="item.promedio"></div>
+                    <div class="bar" [style.height.%]="(item.promedio / 5) * 100" [attr.data-value]="item.promedio">
+                    </div>
                     <span class="x-label">{{ item.periodo }}</span>
                   </div>
                 </div>
 
                 <!-- Line Chart -->
                 <svg *ngIf="chartIsLine" class="line-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <polyline [attr.points]="getPolylinePoints()" class="line-poly" fill="none" stroke="#7b61ff" stroke-width="1.8" />
+                  <!-- Grid lines -->
+                  <line x1="0" y1="0" x2="100" y2="0" class="grid-line" />
+                  <line x1="0" y1="20" x2="100" y2="20" class="grid-line" />
+                  <line x1="0" y1="40" x2="100" y2="40" class="grid-line" />
+                  <line x1="0" y1="60" x2="100" y2="60" class="grid-line" />
+                  <line x1="0" y1="80" x2="100" y2="80" class="grid-line" />
+                  <line x1="0" y1="100" x2="100" y2="100" class="grid-line" />
+
+                  <!-- Smooth path -->
+                  <path [attr.d]="getSmoothPath()" class="line-path" fill="none" stroke="#7b61ff" stroke-width="1.8" />
+
+                  <!-- Data points -->
                   <g *ngFor="let item of historico; let i = index">
-                    <circle class="line-dot" [attr.cx]="pointFor(i).x" [attr.cy]="pointFor(i).y" r="1.6" fill="#7b61ff"></circle>
+                    <circle class="line-dot" [attr.cx]="pointFor(i).x" [attr.cy]="pointFor(i).y" r="1.6" fill="#7b61ff">
+                    </circle>
                   </g>
                 </svg>
 
@@ -171,12 +176,13 @@
               </div>
 
               <!-- Updated toggle button with icon only -->
-              <button class="chart-type-btn" (click)="toggleChartType()" [title]="chartIsLine ? 'Cambiar a barras' : 'Cambiar a líneas'">
+              <button class="chart-type-btn" (click)="toggleChartType()"
+                [title]="chartIsLine ? 'Cambiar a barras' : 'Cambiar a líneas'">
                 <i [class]="chartIsLine ? 'fa-solid fa-chart-column' : 'fa-solid fa-chart-line'"></i>
               </button>
             </div>
             <div *ngIf="historico.length === 0" style="text-align: center; padding: 20px;">
-                No hay historial disponible.
+              No hay historial disponible.
             </div>
           </div>
 
@@ -188,12 +194,8 @@
     <footer class="footer-custom">
       <div class="footer-section left">
         <div class="sia-logo-container">
-          <img
-            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png"
-            class="sia-img"
-            alt="SIA Logo"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-          />
+          <img src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png" class="sia-img" alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
           <div class="sia-fallback-logo" style="display: none">SIA</div>
         </div>
         <div class="footer-text-group">
@@ -216,11 +218,7 @@
 
   <!-- Sidebar Container -->
   <div class="flex_aside" [class.active]="isSidebarOpen">
-    <div
-      class="sidebar-backdrop"
-      *ngIf="isSidebarOpen"
-      (click)="closeSidebar()"
-    ></div>
+    <div class="sidebar-backdrop" *ngIf="isSidebarOpen" (click)="closeSidebar()"></div>
 
     <app-sidebar [isLoggedIn]="true"></app-sidebar>
   </div>

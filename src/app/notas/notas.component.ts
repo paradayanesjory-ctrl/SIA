@@ -28,23 +28,48 @@ export class NotasComponent implements OnInit {
   promedioAcumulado = 0
   chartIsLine = false
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   toggleChartType() {
     this.chartIsLine = !this.chartIsLine
   }
 
-  getPolylinePoints(): string {
+  getSmoothPath(): string {
     if (!this.historico || this.historico.length === 0) return ""
     const n = this.historico.length
-    return this.historico
-      .map((item: any, i: number) => {
-        const x = n === 1 ? 50 : (i / (n - 1)) * 100
-        const value = Number(item.promedio ?? item.value ?? 0)
-        const y = 100 - (Math.max(0, Math.min(5, value)) / 5) * 100
-        return `${x},${y}`
-      })
-      .join(" ")
+
+    if (n === 1) {
+      const value = Number(this.historico[0].promedio ?? this.historico[0].value ?? 0)
+      const y = 100 - (Math.max(0, Math.min(5, value)) / 5) * 100
+      return `M 50,${y} L 50,${y}`
+    }
+
+    // Generate points
+    const points = this.historico.map((item: any, i: number) => {
+      const x = (i / (n - 1)) * 100
+      const value = Number(item.promedio ?? item.value ?? 0)
+      const y = 100 - (Math.max(0, Math.min(5, value)) / 5) * 100
+      return { x, y }
+    })
+
+    // Create smooth path using cubic Bezier curves
+    let path = `M ${points[0].x},${points[0].y}`
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const current = points[i]
+      const next = points[i + 1]
+
+      // Calculate control points for smooth curve
+      const controlPointDistance = (next.x - current.x) * 0.5
+      const cp1x = current.x + controlPointDistance
+      const cp1y = current.y
+      const cp2x = next.x - controlPointDistance
+      const cp2y = next.y
+
+      path += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${next.x},${next.y}`
+    }
+
+    return path
   }
 
   pointFor(i: number) {
@@ -75,54 +100,60 @@ export class NotasComponent implements OnInit {
       .slice()
       .sort((a: any, b: any) => (a.semesterNumber || 0) - (b.semesterNumber || 0))
 
-    // Notas Actuales: mostrar SOLO el último semestre cursado (último element de semesters)
-    const lastSem = this.getLastSemester(student)
-    if (lastSem) {
-      this.notasActuales = (lastSem.subjects || []).map((s: any) => {
-        // Helper to parse grades: empty string/null/undefined -> NaN
-        const parse = (v: any) => (v === "" || v === null || v === undefined ? Number.NaN : Number(v))
-
-        const nota1 = parse(s.nota1 ?? s.nota_1)
-        const nota2 = parse(s.nota2 ?? s.nota_2)
-        const nota3 = parse(s.nota3 ?? s.nota_3)
-
-        // Calculate average of available notes (now all should be available)
-        const validNotes = [nota1, nota2, nota3].filter((n) => !isNaN(n))
-        const sum = validNotes.reduce((a, b) => a + b, 0)
-        const count = validNotes.length
-        const avg = count > 0 ? sum / count : Number.NaN
-
-        // 70% component
-        const setentaCalc = !isNaN(avg) ? Math.round(avg * 0.7 * 100) / 100 : Number.NaN
-
-        const examen = parse(s.examen ?? s.exam)
-
-        // Calculate definitive: need both 70% component and exam
-        // If user wants partial calculation, we could adjust, but typically "definitiva" needs all parts.
-        // Assuming strict calculation for "Definitiva" column.
-        let definitivaCalc: string | number = ""
-
-        if (!isNaN(setentaCalc) && !isNaN(examen)) {
-          definitivaCalc = Math.round((setentaCalc + examen * 0.3) * 100) / 100
-        } else {
-          // Fallback to hardcoded if calculation not possible (or leave empty)
-          definitivaCalc = s.finalGrade ?? s.definitiva ?? ""
-        }
-
-        return {
-          codigo: s.subjectCode || s.codigo || "",
-          nombre: s.subjectName || s.materia || "",
-          nota1: isNaN(nota1) ? "" : nota1,
-          nota2: isNaN(nota2) ? "" : nota2,
-          nota3: isNaN(nota3) ? "" : nota3,
-          setenta: !isNaN(setentaCalc) ? setentaCalc : (s.setenta ?? s.setentaPorc ?? ""),
-          examen: !isNaN(examen) ? examen : (s.examen ?? ""),
-          definitiva: definitivaCalc,
-          habilitacion: s.habilitacion ?? "",
-        }
-      })
+    // Notas Actuales: usar notasActuales si existe, sino calcular del último semestre
+    if (student.notasActuales && student.notasActuales.length > 0) {
+      // Usar directamente las notas actuales del estudiante
+      this.notasActuales = student.notasActuales
     } else {
-      this.notasActuales = student.notasActuales || []
+      // Fallback: calcular del último semestre cursado
+      const lastSem = this.getLastSemester(student)
+      if (lastSem) {
+        this.notasActuales = (lastSem.subjects || []).map((s: any) => {
+          // Helper to parse grades: empty string/null/undefined -> NaN
+          const parse = (v: any) => (v === "" || v === null || v === undefined ? Number.NaN : Number(v))
+
+          const nota1 = parse(s.nota1 ?? s.nota_1)
+          const nota2 = parse(s.nota2 ?? s.nota_2)
+          const nota3 = parse(s.nota3 ?? s.nota_3)
+
+          // Calculate average of available notes (now all should be available)
+          const validNotes = [nota1, nota2, nota3].filter((n) => !isNaN(n))
+          const sum = validNotes.reduce((a, b) => a + b, 0)
+          const count = validNotes.length
+          const avg = count > 0 ? sum / count : Number.NaN
+
+          // 70% component
+          const setentaCalc = !isNaN(avg) ? Math.round(avg * 0.7 * 100) / 100 : Number.NaN
+
+          const examen = parse(s.examen ?? s.exam)
+
+          // Calculate definitive: need both 70% component and exam
+          // If user wants partial calculation, we could adjust, but typically "definitiva" needs all parts.
+          // Assuming strict calculation for "Definitiva" column.
+          let definitivaCalc: string | number = ""
+
+          if (!isNaN(setentaCalc) && !isNaN(examen)) {
+            definitivaCalc = Math.round((setentaCalc + examen * 0.3) * 100) / 100
+          } else {
+            // Fallback to hardcoded if calculation not possible (or leave empty)
+            definitivaCalc = s.finalGrade ?? s.definitiva ?? ""
+          }
+
+          return {
+            codigo: s.subjectCode || s.codigo || "",
+            nombre: s.subjectName || s.materia || "",
+            nota1: isNaN(nota1) ? "" : nota1,
+            nota2: isNaN(nota2) ? "" : nota2,
+            nota3: isNaN(nota3) ? "" : nota3,
+            setenta: !isNaN(setentaCalc) ? setentaCalc : (s.setenta ?? s.setentaPorc ?? ""),
+            examen: !isNaN(examen) ? examen : (s.examen ?? ""),
+            definitiva: definitivaCalc,
+            habilitacion: s.habilitacion ?? "",
+          }
+        })
+      } else {
+        this.notasActuales = []
+      }
     }
 
     // Notas Acumuladas: inicializar con el primer semestre disponible en la navegación
@@ -130,7 +161,7 @@ export class NotasComponent implements OnInit {
       this.activeSemesterIndex = 0 // start showing the earliest by default (can be changed)
       this.setNotasAcumuladasForIndex(this.activeSemesterIndex)
     } else {
-      this.notasAcumuladas = student.notasAcumuladas || []
+      this.notasAcumuladas = student.notasActuales || []
       this.semesterName = ""
     }
     this.historico = student.historico || []

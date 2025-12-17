@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
       
       if (student) {
         this.showNotificationMessage(
-          `¡Bienvenido ${student.fullName}!`,
+          `Usuario autenticado`,
           'success'
         );
         

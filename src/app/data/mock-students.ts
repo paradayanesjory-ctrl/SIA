@@ -154,9 +154,9 @@ export const MOCK_STUDENTS: Student[] = [
   {
     codigo: '192260',
     documento: '5073908',
-    fullName: 'María García López',
+    fullName: 'Yenderson Martinez',
     career: 'Ingeniería de Sistemas',
-    email: 'maria.garcia@ufpso.edu.co',
+    email: 'yeartinezm@ufpso.edu.co',
     totalCredits: 80,
     overallAverage: 3.8,
     semesters: [
@@ -209,13 +209,14 @@ export const MOCK_STUDENTS: Student[] = [
     ]
   },
   {
-    codigo: '191919',
-    documento: '1092355246',
-    fullName: 'Carlos Rodríguez Pérez',
+    codigo: '242113',
+    documento: '1065872030',
+    fullName: 'David Perez Julio',
     career: 'Ingeniería de Sistemas',
     email: 'carlos.rodriguez@ufpso.edu.co',
     totalCredits: 100,
     overallAverage: 4.0,
+    imageUrl: 'img/david.png',
     semesters: [
       {
         semesterNumber: 1,
@@ -263,6 +264,14 @@ export const MOCK_STUDENTS: Student[] = [
           }
         ]
       }
+    ],
+    notasActuales: [
+      { codigo: '241406B', nombre: 'METODOLOGIA DE LA INVESTIGACION', nota1: 3.9, nota2: 4.3, nota3: 4.0, setenta: 2.84, examen: 4.1, definitiva: 4.0, habilitacion: '' },
+      { codigo: '241402B', nombre: 'DERECHO CIVIL CONTRATOS PROCESAL I', nota1: 3.5, nota2: 3.9, nota3: 4.8, setenta: 2.9, examen: 4.7, definitiva: 4.1, habilitacion: '' },
+      { codigo: '241303B', nombre: 'DERECHO PENAL GENERAL I', nota1: 4.2, nota2: 3.5, nota3: 4.5, setenta: 2.84, examen: 5.0, definitiva: 4.3, habilitacion: '' },
+      { codigo: '241306C', nombre: 'DERECHOS HUMANOS Y MECANISMOS DE PRO', nota1: 5.0, nota2: 5.0, nota3: 4.0, setenta: 3.3, examen: 4.8, definitiva: 4.7, habilitacion: '' },
+      { codigo: '241304A', nombre: 'DERECHO ADMINISTRATIVO I', nota1: 3.3, nota2: 5.0, nota3: 4.1, setenta: 2.89, examen: 4.5, definitiva: 4.2, habilitacion: '' },
+      { codigo: '241305B', nombre: 'SUCESIONES', nota1: 2.8, nota2: 4.4, nota3: 4.8, setenta: 2.7, examen: 4.0, definitiva: 3.9, habilitacion: '' }
     ]
   },
   {
@@ -281,29 +290,37 @@ export const MOCK_STUDENTS: Student[] = [
         period: '2025-1',
         averageGrade: 4.1,
         subjects: [
-          { subjectName: 'Matemáticas I', 
-            subjectCode: '951101', 
-            credits: 3, 
+          {
+            subjectName: 'Matemáticas I',
+            subjectCode: '951101',
+            credits: 3,
             nota1: 3.5, nota2: 3.2, nota3: 3.1, setenta: 2.38, examen: 3.6, // Recalculated 70%?? No, user mock had this.
             finalGrade: 4.0,
-            status: 'Aprobada' 
+            status: 'Aprobada'
           },
-          { subjectName: 'Principios de economía', 
-            subjectCode: '951102', 
-            credits: 3, 
+          {
+            subjectName: 'Principios de economía',
+            subjectCode: '951102',
+            credits: 3,
             nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0,
-            finalGrade: 4.0, 
-            status: 'Aprobada' 
+            finalGrade: 4.0,
+            status: 'Aprobada'
           },
-          { subjectName: 'Contabilidad financiera', 
-            subjectCode: '951103', 
+          {
+            subjectName: 'Contabilidad financiera',
+            subjectCode: '951103',
             credits: 3,
             nota1: 4.5, nota2: 4.5, nota3: 4.5, setenta: 3.15, examen: 4.0, // Avg 4.5, 70%=3.15. Ex=4.0. 3.15+1.2=4.35 -> 4.4
-            finalGrade: 4.0, status: 'Aprobada' }, // Wait, user wants 4.0? I'll just put standard passing
-          { subjectName: 'Fundamentos de administración', subjectCode: '951104', credits: 4,
-            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada' },
-          { subjectName: 'Lecto escritura y comunicación', subjectCode: '951105', credits: 2,
-            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada' }
+            finalGrade: 4.0, status: 'Aprobada'
+          }, // Wait, user wants 4.0? I'll just put standard passing
+          {
+            subjectName: 'Fundamentos de administración', subjectCode: '951104', credits: 4,
+            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada'
+          },
+          {
+            subjectName: 'Lecto escritura y comunicación', subjectCode: '951105', credits: 2,
+            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada'
+          }
         ]
       },
       {

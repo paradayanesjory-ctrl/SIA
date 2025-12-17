@@ -96,7 +96,7 @@ export class SidebarComponent {
           this.authService.login(studentData);
           
           this.showNotificationMessage(
-            `¡Bienvenido! Código: ${this.formData.codigo}`,
+            `Usuario autenticado`,
             'success'
           );
           
