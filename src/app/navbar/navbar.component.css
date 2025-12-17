@@ -71,7 +71,7 @@ p span {
   padding: 10.5px 0 10.5px 10.5px;
 }
 
-/* User Profile Section (Desktop) */
+/* User Profile Section (Desktop & Mobile) */
 .user-profile-desktop {
   display: flex;
   align-items: center;
@@ -89,93 +89,11 @@ p span {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.user-name {
-  color: white;
-  font-family: "Myriad Pro Bold", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Agregado: Estilos para el menú hamburguesa */
-.hamburger-container {
-  display: none;
-  /* Oculto por defecto en desktop */
-}
-
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 20px;
-  position: relative;
-  height: 60px;
-}
-
-/* Hamburger Lines Container */
-#nav-icon1 {
-  width: 45px;
-  height: 48px;
-  position: relative;
-  transform: rotate(0deg);
-  transition: 0.5s ease-in-out;
-  cursor: pointer;
-  z-index: 1;
-}
-
-/* Las 3 líneas blancas */
-#nav-icon1 span {
-  display: block;
-  position: absolute;
-  height: 8px;
-  width: 100%;
-  background: white;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: 0.25s ease-in-out;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-#nav-icon1 span:nth-child(1) {
-  top: 0px;
-}
-
-#nav-icon1 span:nth-child(2) {
-  top: 14px;
-}
-
-#nav-icon1 span:nth-child(3) {
-  top: 28px;
-}
-
-/* Texto SIA debajo del hamburguesa */
-.sia-label {
-  color: white;
-  font-family: "Myriad Pro Bold Italic", sans-serif;
-  font-weight: 800;
-  font-size: 26px;
-  font-style: italic;
-  cursor: pointer;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  letter-spacing: 2px;
-}
-
 .desktop-sia {
   display: block;
 }
 
-/* Agregado: Media query para mostrar hamburguesa en móvil */
+/* Response Media query */
 @media (max-width: 768px) {
   header {
     padding: 0;
@@ -198,21 +116,13 @@ p span {
     padding: 0 10px;
   }
 
-  /* Hide user profile in mobile */
   .user-profile-desktop {
-    display: none !important;
-  }
-
-  /* Mostrar hamburguesa en móvil */
-  .hamburger-container {
     display: flex !important;
-    align-items: center;
-    font-weight: bold;
   }
 
-  /* Ocultar el texto SIA grande en móvil */
   .desktop-sia {
-    display: none !important;
+    display: block !important;
+    font-size: 2rem;
   }
 
   .right-section {

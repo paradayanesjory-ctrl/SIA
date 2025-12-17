@@ -2,7 +2,10 @@
   <!-- Main Content Container -->
   <div class="flex_cont">
     <!-- Navbar -->
-    <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
+    <app-navbar
+      [isSidebarOpen]="isSidebarOpen"
+      (menuToggled)="toggleSidebar()"
+    ></app-navbar>
 
     <!-- Page Content -->
     <section class="activo" id="contenido">
@@ -11,22 +14,30 @@
 
         <!-- Tabs Navigation -->
         <div class="tabs">
-          <button [class.active]="activeTab === 'actuales'" (click)="setActiveTab('actuales')">
+          <button
+            [class.active]="activeTab === 'actuales'"
+            (click)="setActiveTab('actuales')"
+          >
             <i class="fa-regular fa-pen-to-square"></i>
             <span class="tab-text">Notas Actuales</span>
           </button>
-          <button [class.active]="activeTab === 'acumuladas'" (click)="setActiveTab('acumuladas')">
+          <button
+            [class.active]="activeTab === 'acumuladas'"
+            (click)="setActiveTab('acumuladas')"
+          >
             <i class="fa-solid fa-list"></i>
             <span class="tab-text">Notas Acumuladas</span>
           </button>
-          <button [class.active]="activeTab === 'historico'" (click)="setActiveTab('historico')">
+          <button
+            [class.active]="activeTab === 'historico'"
+            (click)="setActiveTab('historico')"
+          >
             <i class="fa-solid fa-chart-line"></i>
             <span class="tab-text">Promedio Histórico</span>
           </button>
         </div>
 
         <div class="tab-content">
-
           <!-- Notas Actuales -->
           <div *ngIf="activeTab === 'actuales'" class="section-actuales">
             <!-- Desktop Table View -->
@@ -65,13 +76,21 @@
             <!-- Mobile Accordion View -->
             <div class="mobile-accordion mobile-only">
               <div class="accordion-nombre-header">NOMBRE</div>
-              <div class="accordion-item" *ngFor="let nota of notasActuales; let i = index">
+              <div
+                class="accordion-item"
+                *ngFor="let nota of notasActuales; let i = index"
+              >
                 <div class="accordion-header" (click)="toggleItem(i)">
                   <div class="accordion-title">
                     <span class="accordion-code">{{ nota.codigo }}</span>
                     <span class="accordion-name">{{ nota.nombre }}</span>
                   </div>
-                  <i class="fa-solid" [ngClass]="isExpanded(i) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  <i
+                    class="fa-solid"
+                    [ngClass]="
+                      isExpanded(i) ? 'fa-chevron-up' : 'fa-chevron-down'
+                    "
+                  ></i>
                 </div>
                 <div class="accordion-content" *ngIf="isExpanded(i)">
                   <div class="detail-row">
@@ -113,36 +132,38 @@
           <!-- Notas Acumuladas -->
           <div *ngIf="activeTab === 'acumuladas'" class="section-acumuladas">
             <div class="summary-cards">
-              <div class="card card-red">
-                <h3>Créditos Aprobados</h3>
-                <p>{{ creditosAprobados }}</p>
+              <div class="card">
+                <div class="card-header">Créditos Aprobados</div>
+                <div class="card-value">{{ creditosAprobados }}</div>
               </div>
-              <div class="card card-red">
-                <h3>Promedio Acumulado</h3>
-                <p>{{ promedioAcumulado }}</p>
-              </div>
-              <!-- PDF icon for mobile -->
-              <div class="pdf-icon-mobile mobile-only">
-                <i class="fa-solid fa-file-pdf"></i>
+              <div class="card">
+                <div class="card-header">Promedio Acumulado</div>
+                <div class="card-value">{{ promedioAcumulado }}</div>
               </div>
             </div>
 
-            <!-- Desktop semester navigation -->
-            <div class="semester-nav desktop-only">
-              <button *ngIf="activeSemesterIndex > 0" class="nav-btn prev-btn" (click)="prevSemester()">❮</button>
-              <div class="semester-display">{{ semesterName }}</div>
-              <button *ngIf="activeSemesterIndex < semesters.length - 1" class="nav-btn next-btn"
-                (click)="nextSemester()">❯</button>
-              <button class="pdf-btn"><span class="pdf-icon">PDF</span></button>
-            </div>
-
-            <!-- Mobile semester navigation -->
-            <div class="semester-nav-mobile mobile-only">
-              <button *ngIf="activeSemesterIndex > 0" class="nav-btn-mobile prev-btn-mobile"
-                (click)="prevSemester()">❮</button>
-              <div class="semester-display-mobile">{{ semesterName }}</div>
-              <button *ngIf="activeSemesterIndex < semesters.length - 1" class="nav-btn-mobile next-btn-mobile"
-                (click)="nextSemester()">❯</button>
+            <!-- Unified semester navigation for both desktop and mobile -->
+            <div class="semester-nav-container">
+              <div class="semester-nav">
+                <button
+                  *ngIf="activeSemesterIndex > 0"
+                  class="nav-btn prev-btn"
+                  (click)="prevSemester()"
+                >
+                  ❮
+                </button>
+                <div class="semester-display">{{ semesterName }}</div>
+                <button
+                  *ngIf="activeSemesterIndex < semesters.length - 1"
+                  class="nav-btn next-btn"
+                  (click)="nextSemester()"
+                >
+                  ❯
+                </button>
+                <button class="pdf-btn-circle">
+                  <i class="fa-solid fa-file-pdf"></i>
+                </button>
+              </div>
             </div>
 
             <!-- Desktop Table -->
@@ -171,13 +192,21 @@
             <!-- Mobile Accordion View -->
             <div class="mobile-accordion mobile-only">
               <div class="accordion-nombre-header">MATERIA</div>
-              <div class="accordion-item" *ngFor="let nota of notasAcumuladas; let i = index">
+              <div
+                class="accordion-item"
+                *ngFor="let nota of notasAcumuladas; let i = index"
+              >
                 <div class="accordion-header" (click)="toggleItem(1000 + i)">
                   <div class="accordion-title">
                     <span class="accordion-code">{{ nota.codigo }}</span>
                     <span class="accordion-name">{{ nota.materia }}</span>
                   </div>
-                  <i class="fa-solid" [ngClass]="isExpanded(1000 + i) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  <i
+                    class="fa-solid"
+                    [ngClass]="
+                      isExpanded(1000 + i) ? 'fa-chevron-up' : 'fa-chevron-down'
+                    "
+                  ></i>
                 </div>
                 <div class="accordion-content" *ngIf="isExpanded(1000 + i)">
                   <div class="detail-row">
@@ -196,8 +225,12 @@
             </div>
 
             <div class="pagination-dots">
-              <span *ngFor="let s of semesters; let i = index" class="dot" [class.active]="i === activeSemesterIndex"
-                (click)="goToSemester(i)"></span>
+              <span
+                *ngFor="let s of semesters; let i = index"
+                class="dot"
+                [class.active]="i === activeSemesterIndex"
+                (click)="goToSemester(i)"
+              ></span>
             </div>
           </div>
 
@@ -235,14 +268,22 @@
                 <!-- Bar Chart -->
                 <div class="bars-area" *ngIf="!chartIsLine">
                   <div class="bar-group" *ngFor="let item of historico">
-                    <div class="bar" [style.height.%]="(item.promedio / 5) * 100" [attr.data-value]="item.promedio">
-                    </div>
+                    <div
+                      class="bar"
+                      [style.height.%]="(item.promedio / 5) * 100"
+                      [attr.data-value]="item.promedio"
+                    ></div>
                     <span class="x-label">{{ item.periodo }}</span>
                   </div>
                 </div>
 
                 <!-- Line Chart -->
-                <svg *ngIf="chartIsLine" class="line-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <svg
+                  *ngIf="chartIsLine"
+                  class="line-svg"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
                   <!-- Grid lines -->
                   <line x1="0" y1="0" x2="100" y2="0" class="grid-line" />
                   <line x1="0" y1="20" x2="100" y2="20" class="grid-line" />
@@ -252,32 +293,56 @@
                   <line x1="0" y1="100" x2="100" y2="100" class="grid-line" />
 
                   <!-- Smooth path -->
-                  <path [attr.d]="getSmoothPath()" class="line-path" fill="none" stroke="#7b61ff" stroke-width="1.8" />
+                  <path
+                    [attr.d]="getSmoothPath()"
+                    class="line-path"
+                    fill="none"
+                    stroke="#7b61ff"
+                    stroke-width="1.8"
+                  />
 
                   <!-- Data points -->
                   <g *ngFor="let item of historico; let i = index">
-                    <circle class="line-dot" [attr.cx]="pointFor(i).x" [attr.cy]="pointFor(i).y" r="1.6" fill="#7b61ff">
-                    </circle>
+                    <circle
+                      class="line-dot"
+                      [attr.cx]="pointFor(i).x"
+                      [attr.cy]="pointFor(i).y"
+                      r="1.6"
+                      fill="#7b61ff"
+                    ></circle>
                   </g>
                 </svg>
 
                 <!-- X-axis labels for line chart -->
                 <div class="line-labels" *ngIf="chartIsLine">
-                  <span class="line-label" *ngFor="let item of historico">{{ item.periodo }}</span>
+                  <span class="line-label" *ngFor="let item of historico">{{
+                    item.periodo
+                  }}</span>
                 </div>
               </div>
 
               <!-- Updated toggle button with icon only -->
-              <button class="chart-type-btn" (click)="toggleChartType()"
-                [title]="chartIsLine ? 'Cambiar a barras' : 'Cambiar a líneas'">
-                <i [class]="chartIsLine ? 'fa-solid fa-chart-column' : 'fa-solid fa-chart-line'"></i>
+              <button
+                class="chart-type-btn"
+                (click)="toggleChartType()"
+                [title]="chartIsLine ? 'Cambiar a barras' : 'Cambiar a líneas'"
+              >
+                <i
+                  [class]="
+                    chartIsLine
+                      ? 'fa-solid fa-chart-column'
+                      : 'fa-solid fa-chart-line'
+                  "
+                ></i>
               </button>
             </div>
-            <div *ngIf="historico.length === 0" style="text-align: center; padding: 20px;">
+            <div
+              *ngIf="historico.length === 0"
+              style="text-align: center; padding: 20px"
+            >
               No hay historial disponible.
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -286,8 +351,12 @@
     <footer class="footer-custom">
       <div class="footer-section left">
         <div class="sia-logo-container">
-          <img src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png" class="sia-img" alt="SIA Logo"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <img
+            src="https://siaweb.ufpso.edu.co/public/views/imagenes/ufpso/logo_sia.png"
+            class="sia-img"
+            alt="SIA Logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          />
           <div class="sia-fallback-logo" style="display: none">SIA</div>
         </div>
         <div class="footer-text-group">
@@ -310,7 +379,11 @@
 
   <!-- Sidebar Container -->
   <div class="flex_aside" [class.active]="isSidebarOpen">
-    <div class="sidebar-backdrop" *ngIf="isSidebarOpen" (click)="closeSidebar()"></div>
+    <div
+      class="sidebar-backdrop"
+      *ngIf="isSidebarOpen"
+      (click)="closeSidebar()"
+    ></div>
 
     <app-sidebar [isLoggedIn]="true"></app-sidebar>
   </div>
