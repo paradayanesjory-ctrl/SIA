@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth.service';
 import { MOCK_STUDENTS } from '../data/mock-students';
@@ -13,11 +14,13 @@ import { MOCK_STUDENTS } from '../data/mock-students';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Input() isLoggedIn = false;
 
   // Estado para colapsar/expandir el sidebar
   collapsed = false;
+
+  activeItem = 'Inicio';
 
   showPassword = false;
   isLoading = false;
@@ -31,17 +34,7 @@ export class SidebarComponent {
     password: ''
   };
 
-  constructor(private router: Router, private authService: AuthService) {}
-
-  // Alterna el estado del sidebar (colapsado / expandido)
-  toggleSidebar(): void {
-    this.collapsed = !this.collapsed;
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']); // Redirect to login or home
-  }
+  showResetModal = false;
 
   // Lista de usuarios válidos
   private users = [
@@ -50,6 +43,45 @@ export class SidebarComponent {
     { codigo: '191919', documento: '1092355246', password: '12345678' },
     { codigo: '242113', documento: '1065872030', password: 'Valeria2006' }
   ];
+
+  constructor(private router: Router, private authService: AuthService) {
+    // Listen for route changes to update activeItem if needed (even if component persists)
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateActiveItemFromRoute();
+    });
+  }
+
+  ngOnInit(): void {
+    this.updateActiveItemFromRoute();
+  }
+
+  private updateActiveItemFromRoute(): void {
+    const url = this.router.url;
+    if (url.includes('/notas')) {
+      this.activeItem = 'Notas';
+    } else if (url.includes('/dashboard')) {
+      this.activeItem = 'Inicio';
+    } else {
+      // Default or other routes
+      this.activeItem = 'Inicio';
+    }
+  }
+
+  // Alterna el estado del sidebar (colapsado / expandido)
+  toggleSidebar(): void {
+    this.collapsed = !this.collapsed;
+  }
+
+  setActiveItem(item: string): void {
+    this.activeItem = item;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -74,7 +106,6 @@ export class SidebarComponent {
   }
 
   handleLogin(): void {
-    // Validar campos vacíos
     if (!this.formData.codigo || !this.formData.documento || !this.formData.password) {
       this.showNotificationMessage('Por favor complete todos los campos', 'error');
       return;
@@ -82,35 +113,22 @@ export class SidebarComponent {
 
     this.isLoading = true;
 
-    // Simular llamada a API
     setTimeout(() => {
-      // Find the user credentials check first (already done in validateCredentials, but we need the object)
       const validParams = this.validateCredentials();
       
       if (validParams) {
-        // Find the full student data from MOCK_STUDENTS using the code
         const studentData = MOCK_STUDENTS.find(s => s.codigo === this.formData.codigo);
         
         if (studentData) {
-          // Log in with the full student data
           this.authService.login(studentData);
-          
-          this.showNotificationMessage(
-            `Usuario autenticado`,
-            'success'
-          );
+          this.showNotificationMessage('Usuario autenticado', 'success');
           
           setTimeout(() => {
-            console.log('Redirigiendo al dashboard...');
             this.router.navigate(['/dashboard']);
           }, 1500);
         } else {
-           // Case where credentials match mock-users but data is missing in mock-students
            console.warn('Student data not found for code:', this.formData.codigo);
            this.showNotificationMessage('Error cargando datos del estudiante.', 'error');
-           // Fallback login just to allow entry? Or block?
-           // For now, let's block or try to login with minimal data if needed. 
-           // Better to be safe and show error.
         }
 
       } else {
@@ -128,8 +146,6 @@ export class SidebarComponent {
       this.handleLogin();
     }
   }
-
-  showResetModal = false;
 
   resetPassword(): void {
     this.openResetModal();

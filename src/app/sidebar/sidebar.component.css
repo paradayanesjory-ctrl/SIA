@@ -129,11 +129,13 @@
 .input_label input[type="number"]::-webkit-inner-spin-button,
 .input_label input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 .input_label input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Box Icon */
@@ -171,8 +173,8 @@
   width: max-content;
 }
 
-.input_label input:focus~.box_blanco label,
-.input_label input:not(:placeholder-shown)~.box_blanco label {
+.input_label input:focus ~ .box_blanco label,
+.input_label input:not(:placeholder-shown) ~ .box_blanco label {
   top: -20px;
   left: 0;
   font-size: 13px;
@@ -304,7 +306,7 @@
   color: #e2e2e2;
 }
 
-.nota>.line {
+.nota > .line {
   position: absolute;
   width: 4em;
   height: 100%;
@@ -315,20 +317,20 @@
   align-items: center;
 }
 
-.nota>.line>span {
+.nota > .line > span {
   color: rgb(78, 78, 78);
   font-size: 2em;
 }
 
-.nota.warning>.line {
+.nota.warning > .line {
   background: rgb(255, 235, 63);
 }
 
-.nota.error>.line {
+.nota.error > .line {
   background: rgb(245, 61, 61);
 }
 
-.nota.success>.line {
+.nota.success > .line {
   background: rgb(31, 203, 74);
 }
 
@@ -389,7 +391,6 @@
 
 /* Animación del loader */
 @keyframes cargadorBlanco {
-
   0%,
   100% {
     box-shadow: 0em -2.6em 0em 0em #ffffff,
@@ -510,7 +511,6 @@
 }
 
 .menu-item {
-
   display: flex;
   align-items: center;
   padding: 8px 5px;
@@ -532,7 +532,6 @@
 .menu-item span {
   font-weight: 550;
   color: #5c5c5c;
-
 }
 
 .menu-item:hover {
@@ -707,77 +706,6 @@
     padding-bottom: 40px;
   }
 
-  /* Hamburger Container with Red Background */
-  .hamburMobil {
-    display: flex !important;
-    background: #ec1c21;
-    width: 100%;
-    height: 60px;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 20px;
-  }
-
-  /* Icon Wrapper */
-  .hamburMobil i {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  /* Hamburger Lines Container */
-  #nav-icon1 {
-    width: 35px;
-    height: 25px;
-    position: relative;
-    transform: rotate(0deg);
-    transition: 0.5s ease-in-out;
-    cursor: pointer;
-    margin-bottom: -5px;
-    /* Adjust spacing to SIA text */
-  }
-
-  /* The 3 white lines */
-  #nav-icon1 span {
-    display: block;
-    position: absolute;
-    height: 5px;
-    width: 100%;
-    background: white;
-    border-radius: 9px;
-    opacity: 1;
-    left: 0;
-    transform: rotate(0deg);
-    transition: 0.25s ease-in-out;
-  }
-
-  #nav-icon1 span:nth-child(1) {
-    top: 0px;
-  }
-
-  #nav-icon1 span:nth-child(2) {
-    top: 10px;
-  }
-
-  #nav-icon1 span:nth-child(3) {
-    top: 20px;
-  }
-
-  /* SIA Text Overlay/Label */
-  .hamburMobil label {
-    color: white;
-    font-family: "Myriad Pro Bold Italic", sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    font-style: italic;
-    cursor: pointer;
-    margin-top: -2px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  }
-
   /* Adjust notification for Sidebar usage on mobile */
   #notificacion {
     right: 10px;
@@ -818,36 +746,6 @@
   .flex_aside.collapsed .ingresar,
   .flex_aside.collapsed .box_blanco label {
     display: none !important;
-  }
-
-  .sidebar-toggle {
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    width: 44px;
-    height: 44px;
-    background: #ec1c21;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    cursor: pointer;
-    z-index: 1100;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-    border-radius: 6px;
-    color: white;
-  }
-
-  .sidebar-toggle i {
-    transform: rotate(0);
-    color: white;
-    font-size: 18px;
-    margin: 0;
-  }
-
-  .sidebar-toggle .label-vertical {
-    display: none;
   }
 
   /* Reduce overflow issues cuando está colapsado */

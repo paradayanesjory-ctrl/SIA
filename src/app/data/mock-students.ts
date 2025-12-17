@@ -422,7 +422,7 @@ export const MOCK_STUDENTS: Student[] = [
             subjectCode: '951101',
             credits: 3,
             nota1: 3.5, nota2: 3.2, nota3: 3.1, setenta: 2.38, examen: 3.6, // Recalculated 70%?? No, user mock had this.
-            finalGrade: 4.0,
+            finalGrade: 3.2,
             status: 'Aprobada'
           },
           {
@@ -430,7 +430,7 @@ export const MOCK_STUDENTS: Student[] = [
             subjectCode: '951102',
             credits: 3,
             nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0,
-            finalGrade: 4.0,
+            finalGrade: 3.5,
             status: 'Aprobada'
           },
           {
@@ -442,11 +442,13 @@ export const MOCK_STUDENTS: Student[] = [
           }, // Wait, user wants 4.0? I'll just put standard passing
           {
             subjectName: 'Fundamentos de administración', subjectCode: '951104', credits: 4,
-            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada'
+            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, 
+            finalGrade: 4.5, status: 'Aprobada'
           },
           {
             subjectName: 'Lecto escritura y comunicación', subjectCode: '951105', credits: 2,
-            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, finalGrade: 4.0, status: 'Aprobada'
+            nota1: 4.0, nota2: 4.0, nota3: 4.0, setenta: 2.8, examen: 4.0, 
+            finalGrade: 3.9, status: 'Aprobada'
           }
         ]
       },

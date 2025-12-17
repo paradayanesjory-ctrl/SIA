@@ -1,16 +1,7 @@
 <div class="flex_aside text-sm" [class.collapsed]="collapsed">
   <aside id="lateral" class="activo">
     <!--SIA-->
-    <div class="hamburMobil">
-      <i class="">
-        <div id="nav-icon1">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <label>SIA</label>
-      </i>
-    </div>
+
     <div id="SIA">
       <span>SIA</span>
     </div>
@@ -108,59 +99,117 @@
         class="text-red-500!"
       >
         <ul class="menu-list">
-          <li class="menu-item active" routerLink="/dashboard">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Inicio'"
+            (click)="setActiveItem('Inicio')"
+            routerLink="/dashboard"
+          >
             <i class="fa-solid fa-house"></i>
             <span>Inicio</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Datos Académicos'"
+            (click)="setActiveItem('Datos Académicos')"
+          >
             <i class="fa-solid fa-credit-card"></i>
             <span>Datos Académicos</span>
           </li>
-          <li class="menu-item" routerLink="/notas">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Notas'"
+            (click)="setActiveItem('Notas')"
+            routerLink="/notas"
+          >
             <i class="fa-solid fa-medal"></i>
             <span>Notas</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Pensum'"
+            (click)="setActiveItem('Pensum')"
+          >
             <i class="fa-solid fa-sitemap"></i>
             <span>Pensum</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Horario'"
+            (click)="setActiveItem('Horario')"
+          >
             <i class="fa-solid fa-calendar-days"></i>
             <span>Horario</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Inclusiones'"
+            (click)="setActiveItem('Inclusiones')"
+          >
             <i class="fa-solid fa-square-check"></i>
             <span>Inclusiones</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Financiación'"
+            (click)="setActiveItem('Financiación')"
+          >
             <i class="fa-solid fa-sack-dollar"></i>
             <span>Financiación</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Bienestar Universitario'"
+            (click)="setActiveItem('Bienestar Universitario')"
+          >
             <i class="fa-solid fa-briefcase"></i>
             <span>Bienestar Universitario</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Restaurante'"
+            (click)="setActiveItem('Restaurante')"
+          >
             <i class="fa-solid fa-utensils"></i>
             <span>Restaurante</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Vacacional'"
+            (click)="setActiveItem('Vacacional')"
+          >
             <i class="fas fa-book"></i>
             <span>Vacacional</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Trámites'"
+            (click)="setActiveItem('Trámites')"
+          >
             <i class="fa-solid fa-folder-open"></i>
             <span>Trámites</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Granja'"
+            (click)="setActiveItem('Granja')"
+          >
             <i class="fa-solid fa-tractor"></i>
             <span>Granja</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Graduado'"
+            (click)="setActiveItem('Graduado')"
+          >
             <i class="fa-solid fa-user-graduate"></i>
             <span>Graduado</span>
           </li>
-          <li class="menu-item">
+          <li
+            class="menu-item"
+            [class.active]="activeItem === 'Acceso a Base de Datos'"
+            (click)="setActiveItem('Acceso a Base de Datos')"
+          >
             <i class="fa-solid fa-database"></i>
             <span>Acceso a Base de Datos</span>
           </li>
@@ -187,23 +236,6 @@
       {{ isLoading ? "Ingresando..." : "Ingresar" }}
     </button>
   </aside>
-
-  <!-- Toggle button: muestra/oculta el sidebar -->
-  <div
-    class="sidebar-toggle"
-    role="button"
-    tabindex="0"
-    (click)="toggleSidebar()"
-    (keydown.enter)="toggleSidebar()"
-    [attr.aria-pressed]="collapsed"
-  >
-    <i
-      [class]="
-        collapsed ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-left'
-      "
-    ></i>
-    <span class="label-vertical">Menú</span>
-  </div>
 
   <!-- Notificación de error -->
   <div id="notificacion" class="activo" *ngIf="showNotification">
