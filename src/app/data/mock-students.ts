@@ -212,7 +212,7 @@ export const MOCK_STUDENTS: Student[] = [
     codigo: '242113',
     documento: '1065872030',
     fullName: 'David Perez Julio',
-    career: 'Ingeniería de Sistemas',
+    career: 'Derecho',
     email: 'carlos.rodriguez@ufpso.edu.co',
     totalCredits: 109,
     overallAverage: 4.1,
