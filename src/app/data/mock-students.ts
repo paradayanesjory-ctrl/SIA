@@ -399,6 +399,11 @@ export const MOCK_STUDENTS: Student[] = [
       { codigo: '241306C', nombre: 'DERECHOS HUMANOS Y MECANISMOS DE PRO', nota1: 5.0, nota2: 5.0, nota3: 4.0, setenta: 3.3, examen: 4.8, definitiva: 4.7, habilitacion: '' },
       { codigo: '241304A', nombre: 'DERECHO ADMINISTRATIVO I', nota1: 3.3, nota2: 5.0, nota3: 4.1, setenta: 2.89, examen: 4.5, definitiva: 4.2, habilitacion: '' },
       { codigo: '241305B', nombre: 'SUCESIONES', nota1: 2.8, nota2: 4.4, nota3: 4.8, setenta: 2.7, examen: 4.0, definitiva: 3.9, habilitacion: '' }
+    ],
+    historico: [
+      { periodo: 'II-2024', promedio: 4.2 },
+      { periodo: 'I-2025', promedio: 4.1 },
+      { periodo: 'II-2025', promedio: 4.2 }
     ]
   },
   {
