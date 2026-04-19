@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Student, UserCredentials } from '../models/student.model';
 import { MOCK_STUDENTS } from '../data/mock-students';
-import { MOCK_USERS } from '../data/mock-users';
 
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -32,12 +31,13 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Automatically logout when visiting the login page
-    this.authService.logout();
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
-  // Lista de usuarios válidos (importada de datos estáticos)
-  private users: UserCredentials[] = MOCK_USERS;
+  // Lista de usuarios válidos (incluye registros locales)
+  private users: UserCredentials[] = [];
 
   // Referencia a los datos completos de estudiantes
   private students: Student[] = MOCK_STUDENTS;
@@ -47,6 +47,8 @@ export class LoginComponent implements OnInit {
   }
 
   validateCredentials(): Student | null {
+    this.users = this.authService.getUsers();
+
     const user = this.users.find(u => 
       u.codigo === String(this.formData.codigo) &&
       u.documento === String(this.formData.documento) &&

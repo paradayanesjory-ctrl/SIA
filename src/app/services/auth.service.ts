@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Student } from '../models/student.model';
+import { Student, UserCredentials } from '../models/student.model';
+import { MOCK_USERS } from '../data/mock-users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly usersStorageKey = 'registeredUsers';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
@@ -56,5 +58,29 @@ export class AuthService {
   getStudentCodigo(): string | null {
     const student = this.getCurrentStudent();
     return student ? student.codigo : null;
+  }
+
+  getUsers(): UserCredentials[] {
+    const registeredUsers = localStorage.getItem(this.usersStorageKey);
+    const parsedUsers: UserCredentials[] = registeredUsers ? JSON.parse(registeredUsers) : [];
+    return [...MOCK_USERS, ...parsedUsers];
+  }
+
+  register(user: UserCredentials): boolean {
+    const allUsers = this.getUsers();
+    const exists = allUsers.some(
+      current => current.codigo === user.codigo && current.documento === user.documento
+    );
+
+    if (exists) {
+      return false;
+    }
+
+    const registeredUsers = localStorage.getItem(this.usersStorageKey);
+    const parsedUsers: UserCredentials[] = registeredUsers ? JSON.parse(registeredUsers) : [];
+    parsedUsers.push(user);
+    localStorage.setItem(this.usersStorageKey, JSON.stringify(parsedUsers));
+
+    return true;
   }
 }
