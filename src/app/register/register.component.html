@@ -1,0 +1,27 @@
+<div class="register-page">
+  <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggled)="toggleSidebar()"></app-navbar>
+
+  <section class="register-card">
+    <h1>Registro</h1>
+
+    <form (ngSubmit)="register()">
+      <input type="text" name="codigo" placeholder="Código" [(ngModel)]="formData.codigo" />
+      <input type="text" name="documento" placeholder="Documento" [(ngModel)]="formData.documento" />
+      <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="formData.password" />
+      <input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirmar contraseña"
+        [(ngModel)]="formData.confirmPassword"
+      />
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Registrando...' : 'Crear cuenta' }}
+      </button>
+    </form>
+
+    <p class="message" *ngIf="message" [class.error]="messageType === 'error'">{{ message }}</p>
+
+    <a [routerLink]="['/login']">¿Ya tienes cuenta? Inicia sesión</a>
+  </section>
+</div>
