@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.users = this.authService.getUsers();
+
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/dashboard']);
     }
@@ -47,8 +49,6 @@ export class LoginComponent implements OnInit {
   }
 
   validateCredentials(): Student | null {
-    this.users = this.authService.getUsers();
-
     const user = this.users.find(u => 
       u.codigo === String(this.formData.codigo) &&
       u.documento === String(this.formData.documento) &&

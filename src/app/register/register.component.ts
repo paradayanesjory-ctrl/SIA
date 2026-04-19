@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { MOCK_STUDENTS } from '../data/mock-students';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AuthService } from '../services/auth.service';
+
+const REDIRECT_DELAY_MS = 1200;
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   isSidebarOpen = false;
   isLoading = false;
   message = '';
@@ -26,7 +27,9 @@ export class RegisterComponent {
     confirmPassword: ''
   };
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {
+  constructor(private readonly authService: AuthService, private readonly router: Router) {}
+
+  ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/dashboard']);
     }
@@ -37,41 +40,42 @@ export class RegisterComponent {
   }
 
   register(): void {
-    if (!this.formData.codigo || !this.formData.documento || !this.formData.password || !this.formData.confirmPassword) {
+    const codigo = this.formData.codigo.trim();
+    const documento = this.formData.documento.trim();
+    const password = this.formData.password.trim();
+    const confirmPassword = this.formData.confirmPassword.trim();
+
+    if (!codigo || !documento || !password || !confirmPassword) {
       this.showMessage('Todos los campos son obligatorios.', 'error');
       return;
     }
 
-    if (this.formData.password !== this.formData.confirmPassword) {
+    if (password !== confirmPassword) {
       this.showMessage('Las contraseñas no coinciden.', 'error');
       return;
     }
 
-    const studentExists = MOCK_STUDENTS.some(
-      student => student.codigo === this.formData.codigo && student.documento === this.formData.documento
-    );
-
-    if (!studentExists) {
+    if (!this.authService.studentExists(codigo, documento)) {
       this.showMessage('El código o documento no corresponde a un estudiante registrado.', 'error');
       return;
     }
 
     this.isLoading = true;
-    const isCreated = this.authService.register({
-      codigo: this.formData.codigo,
-      documento: this.formData.documento,
-      password: this.formData.password
+    const registrationSucceeded = this.authService.register({
+      codigo,
+      documento,
+      password
     });
 
     this.isLoading = false;
 
-    if (!isCreated) {
+    if (!registrationSucceeded) {
       this.showMessage('El usuario ya existe. Inicia sesión.', 'error');
       return;
     }
 
     this.showMessage('Cuenta creada con éxito. Ahora puedes iniciar sesión.', 'success');
-    setTimeout(() => this.router.navigate(['/login']), 1200);
+    setTimeout(() => this.router.navigate(['/login']), REDIRECT_DELAY_MS);
   }
 
   private showMessage(message: string, type: 'success' | 'error'): void {

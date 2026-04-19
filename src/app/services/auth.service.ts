@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Student, UserCredentials } from '../models/student.model';
 import { MOCK_USERS } from '../data/mock-users';
+import { MOCK_STUDENTS } from '../data/mock-students';
 
 @Injectable({
   providedIn: 'root'
@@ -61,26 +62,58 @@ export class AuthService {
   }
 
   getUsers(): UserCredentials[] {
-    const registeredUsers = localStorage.getItem(this.usersStorageKey);
-    const parsedUsers: UserCredentials[] = registeredUsers ? JSON.parse(registeredUsers) : [];
-    return [...MOCK_USERS, ...parsedUsers];
+    return [...MOCK_USERS, ...this.getStoredRegisteredUsers()];
   }
 
   register(user: UserCredentials): boolean {
     const allUsers = this.getUsers();
     const exists = allUsers.some(
-      current => current.codigo === user.codigo && current.documento === user.documento
+      current => current.codigo === user.codigo || current.documento === user.documento
     );
 
     if (exists) {
       return false;
     }
 
-    const registeredUsers = localStorage.getItem(this.usersStorageKey);
-    const parsedUsers: UserCredentials[] = registeredUsers ? JSON.parse(registeredUsers) : [];
+    const parsedUsers = this.getStoredRegisteredUsers();
     parsedUsers.push(user);
     localStorage.setItem(this.usersStorageKey, JSON.stringify(parsedUsers));
 
     return true;
+  }
+
+  studentExists(codigo: string, documento: string): boolean {
+    const normalizedCodigo = codigo.trim();
+    const normalizedDocumento = documento.trim();
+
+    return MOCK_STUDENTS.some(
+      student =>
+        student.codigo.trim() === normalizedCodigo &&
+        student.documento.trim() === normalizedDocumento
+    );
+  }
+
+  private getStoredRegisteredUsers(): UserCredentials[] {
+    const registeredUsers = localStorage.getItem(this.usersStorageKey);
+    if (!registeredUsers) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(registeredUsers);
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+
+      return parsed.filter(
+        (user): user is UserCredentials =>
+          !!user &&
+          typeof user.codigo === 'string' &&
+          typeof user.documento === 'string' &&
+          typeof user.password === 'string'
+      );
+    } catch {
+      return [];
+    }
   }
 }
